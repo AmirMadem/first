@@ -874,11 +874,11 @@ const Tree = (props) =>{
 
      return(
             <div className="tree" style={{width:biggestRow*2000 +'px',height:((rows.length+1)*CONNECTOR_TOP_GAP)+'px'}}>
-                <Connectors connectorsOutOfFocus={connectorsOutOfFocus} connectedClaims={connectedClaims} clickedClaim={clickedClaim} clickedConnector={clickedConnector} connectorsLocations={connectorsLocations} claimsLocations={claimsLocations} connectorsObj={connectorsObj} scrollToConnector={scrollToConnector} treeID={treeID} claims={claims} rows={rows} treeClaimClick={treeClaimClick}/>  
+                <Connectors connectorsOutOfFocus={connectorsOutOfFocus} connectedClaims={connectedClaims} clickedClaim={clickedClaim} clickedConnector={clickedConnector} connectorsLocations={connectorsLocations} claimsLocations={claimsLocations} connectorsObj={connectorsObj} scrollToConnector={scrollToConnector} treeID={treeID} claims={claims} rows={rows} treeClaimClick={treeClaimClick} reRenderTrees={props.reRenderTrees} userID={props.userID}/>  
                 {!!claimsLocations &&
                     <div>
                         <div style={{position:'absolute'}}>
-                            <DiagonalLines connectorsOutOfFocus={connectorsOutOfFocus} connectedClaims={connectedClaims} clickedClaim={clickedClaim} clickedConnector={clickedConnector} connectorsLocations={connectorsLocations} claimsLocations={claimsLocations} connectorsObj={connectorsObj} scrollToConnector={scrollToConnector} treeID={treeID} claims={claims} rows={rows} treeClaimClick={treeClaimClick}/>  
+                            <DiagonalLines connectorsOutOfFocus={connectorsOutOfFocus} connectedClaims={connectedClaims} clickedClaim={clickedClaim} clickedConnector={clickedConnector} connectorsLocations={connectorsLocations} claimsLocations={claimsLocations} connectorsObj={connectorsObj} scrollToConnector={scrollToConnector} treeID={treeID} claims={claims} rows={rows} treeClaimClick={treeClaimClick} userID={props.userID}/>  
                         </div>
                     </div>
                 }

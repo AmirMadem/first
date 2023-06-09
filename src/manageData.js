@@ -263,12 +263,8 @@ const manageData = {
 				}
 			}
 
-		
-
 		}
-	
 		return connectorsObj;
-
 	},
 
 	getClaimsConnectors:function(claimID,userID){
@@ -323,11 +319,14 @@ const manageData = {
 	},
 
 	addConnector:function(claims,type,targetClaimID,userID,source){
+		
 		var NewConnector ={
 			targetClaimID:targetClaimID,
 			type:type,
 			userID:userID
 		}
+		console.log("NewConnector")
+		console.log(NewConnector)
 
 		NewConnector = getData.addConnector(NewConnector);
 		
