@@ -1,0 +1,12 @@
+statements types:
+
+facts
+
+opinion
+
+actualy -
+
+
+connectors types:
+reason - special ! function as a claim too..
+equel to

@@ -1,0 +1,23 @@
+.form-part{
+    margin-top: 10px;
+  }
+
+.form-part-input{
+    border: none;
+    border-radius: 0px;
+    border: groove;
+}
+
+.form-section{
+    margin-bottom: 40px;
+}
+
+.rigth-left-tabs{
+    text-align: center;
+    display: flex;
+}
+
+.rigth-left-container{
+    width: 50%;
+}
+

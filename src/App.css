@@ -1,0 +1,581 @@
+
+.App {
+  text-align: center;
+  background-color: #f0f2f5;
+  min-height: fit-content;
+  min-width: fit-content;
+}
+
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.facebook-login-div{
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  align-items: center;
+  z-index: 1000;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.nav-bar{
+
+  z-index: 11;
+  width: 100%;
+  background-color: white;
+  height: 62px;
+  position: fixed;
+  top: 0px;
+  border-bottom-style: groove;
+  border-width: thin;
+  border-color: #d0d2d4;
+   
+}
+
+.fb-login-baners{
+     position: absolute;
+    right: 0px;
+    height: inherit;
+    background-color: inherit;
+    vertical-align:middle;
+    width: 200px;
+}
+
+.logo{
+    position: absolute;
+    left: 20px;
+    bottom: 5px;
+    height: inherit;
+    background-color: inherit;
+    vertical-align:middle;
+}
+
+.rounded-pic{
+    border-radius: 50%;
+    background-color: gray;
+    position: absolute;
+    bottom: 5px;
+    right: 20px;
+
+}
+
+
+
+.logo-pic{
+    border-radius: 50%;
+    background-color: gray;
+    position: relative;
+    top:13px;
+    right: 5px;
+    width: 50px;
+    height: 50px;
+  }
+
+.user-name{
+
+    display: inline-block;
+    position: absolute;
+    right: 85px;
+    top: 22px;
+    font-weight: bold;
+}
+
+.profile-bunner{
+   display: inline-block;
+   cursor: pointer;
+   background-color: coral;
+}
+
+.content-container{
+  margin: 8px;
+
+}
+.trees{
+
+  background-color: #f0f2f5;
+
+}
+.claim-container{
+  position: relative;
+    background-color: white;
+    border-style: groove;
+    border-width: thin;
+    border-color: #d0d2d4;
+    border-radius: 8px;
+    width: 51%;
+    margin: auto;
+    margin-bottom: 12px;
+    padding: 25px;
+    text-align: left;
+    min-height: 150px;
+}
+
+.tab-container{
+  position: relative;
+    background-color: white;
+    border-style: groove;
+    border-width: thin;
+    border-color: #d0d2d4;
+    border-radius: 8px;
+    width: 51%;
+    margin: auto;
+    margin-bottom: 12px;
+    padding: 25px;
+
+}
+.add-connector{
+  display: inline-block;
+  width:100%;
+  margin-top:30px;
+}
+.add-connector-tree-container{
+  display: inline-block;
+  position:'relative';
+  margin:'auto';
+  
+}
+.add-tree-connector{
+  font-size: 40px;
+  color: green;
+  border-radius: 8px;
+
+}
+
+.add-connector-tree{
+  margin-top:110px;
+  width:100%;
+  position:fixed;
+  bottom:0;
+  left:0;
+  background-color:white;
+  z-index:999999999;
+  height:350px;
+}
+
+.trees-footer{
+
+  margin-top:10px;
+  width:100%;
+  position:fixed;
+  bottom:0;
+  left:0;
+  background-color:white;
+  z-index:999;
+  height:150px;
+  border-top: groove;
+}
+
+.add-conn-button-div{
+  margin-right: 30px;
+  margin-bottom: 8px;
+}
+
+.connectors{
+  display: inline-block;
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+.contradicting-part{
+  color:crimson;
+  display: inline-block;
+  text-align: center;
+  vertical-align: top;
+  width: 46%;
+  font-size: 12px;
+  margin-right: 30px;
+  margin-bottom: 20px;
+}
+.Aprove-part{
+  color:aqua;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  width: 46%;
+  font-size: 12px;
+  margin-bottom: 20px;
+
+}
+.aprove-part{
+  color: cornflowerblue;
+   text-align: center;
+    position: absolute;
+   right: 5%;
+   width: 32%;
+    font-size: 12px;
+}
+
+.log-conn-type{
+  margin-top: 8px;
+  margin-bottom: 2px;
+  text-align: center;
+  font-weight: bold;
+  
+}
+
+.conn-group{
+    border-style: groove;
+    border-color: gainsboro;
+    border-width: thin;
+    color: black;
+    font-size: 12px;
+    min-height: 50px;
+}
+.choose-connector-type{
+  display: inline-block;
+  vertical-align:middle;
+  width: 41%;
+  margin-left: 30px;
+}
+
+.up-arrow{
+  display: inline-block;
+  vertical-align:middle;
+  width: 1%;
+  border-left: groove;
+  height: 240px;
+}
+
+.con-type-choose{
+  font-size: 14px;
+  margin-left: 10px;
+  height: 40px;
+  border-bottom: groove;
+  border-color: currentColor;
+  width: 97%;
+  margin-top: 20px;
+  text-align: center;
+}
+.submit-connector{
+  font-size: 14px;
+  color: white;
+  background-color: green;
+  margin-bottom: 7px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 4px;
+  
+}
+.submit-connector:disabled{
+  background-color: lightgreen;
+}
+
+.connector-claims{
+  display: inline-block;
+  vertical-align: top;
+  width: 33.3333%;
+}
+
+.target-claim{
+  display: inline-block;
+  vertical-align: top;
+  width: 33.3333%;
+}
+.connector-type-arrow{
+  text-align: center;
+  display: inline-block;
+  width: 33.3333%;
+}
+.arrow{
+  color: red;
+  width: 70%;
+}
+
+.arrow-sign {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.connector-headline{
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.connector-content{
+  display: inline-block;
+  width: 100%;
+}
+
+
+
+.chosen{
+  font-weight: bold;
+  border-bottom: solid;
+  border-color: currentColor;
+}
+.chosen-claims-window{
+    position: relative;
+    margin-top: 10px;
+    padding: 4px;
+    margin-bottom: 23px;
+    height: auto;
+    display: block;
+    height: 80px;
+}
+.chosen-claims-window .conn-group{
+  overflow: auto;
+  height: 80px;
+}
+.add-logconn-claim{
+  border:none;
+  padding: 6px;
+}
+textarea:focus, input:focus{
+    outline: none;
+}
+
+.adding-log-con{
+  margin-top: 30px;
+  margin-bottom: 50px;
+  display: inline-block;
+  vertical-align:middle;
+  width: 50%;
+}
+
+.claim-list-window{
+  height: 80px;
+  display: block;
+ overflow: auto;
+}
+
+.claim-container-pressed{
+  
+
+}
+.feed-search-div{
+     width: 51%;
+    margin: auto;
+}
+.log-con-search-container{
+  font-size:12px;
+}
+
+.search-container{
+    position: relative;
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+
+
+
+.search-in-logconn{
+    margin: auto;
+    margin-bottom: 12px;
+    text-align: left;
+
+}
+.search-input{
+  padding-left: 26px;
+}
+
+.search-icon{
+  position: absolute;
+  left: 7px;
+  top:7px;
+}
+
+.profile-tab{
+  flex-wrap: wrap;
+  width: 100%;
+ padding-bottom: 15px;
+}
+.profile-tab-pressed{
+    color: cornflowerblue;
+    font-weight: bold;
+    border-bottom-style: solid;
+}
+.profile-tabs{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom-style: solid;
+  border-width: 0.1px;
+  border-color:#d0d2d4;
+}
+.main-feed-warpper{
+
+    padding-top: 66px;
+    z-index: 2;
+}
+
+.feed-title{
+  font-size: 30px;
+}
+
+.fa-thumbs-down{
+  margin-right: 8px;
+  color: red;
+}
+.fa-thumbs-up{
+  margin-left: 8px;
+  color: blue;
+}
+
+::content .essb-fans-twitter, ::content .essb-fans-youtube, ::content .essb-mobile-sharepoint, ::content .essb_bottombar, ::content .essb_item, ::content .essb_link_pinterest, ::content .essb_link_twitter, ::content .essb_links_list, ::content .essb_share, ::content .essbfc-container, ::content .essbfc-facebook, ::content .essbfc-instagram, ::content .essbis-hover-overlay, ::content .et-social-google-plus, ::content .et-social-icon, ::content .et-social-icons, ::content .et_social_facebook, ::content .et_social_flyin, ::content .et_social_follow, ::content .et_social_icons_container, ::content .et_social_inline, ::content .et_social_networks, ::content .et_social_pinterest, ::content .et_social_popup, ::content .et_social_sidebar_networks, ::content .et_social_twitter, ::content .etsocialmediahyperlink, ::content .event-share-center, ::content .event-social-box, ::content .eventShare, ::content .ew-social-icons, ::content .expand-share, ::content .expanded_story_socialmedia, ::content .extra-social, ::content .extra-social-links, ::content .extreme-share, ::content .eyebrow-share-widget, ::content .f-social, ::content .f-social-link, ::content .fBsocial, ::content .fButtonLarge, ::content .f_social, ::content .fa-facebook, ::content .fa-facebook-f, ::content .fa-facebook-square, ::content .fa-fb, ::content .fa-flickr, ::content .fa-google, ::content .fa-google-plus, ::content .fa-google-plus-square, ::content .fa-instagram, ::content .fa-linkedin, ::content .fa-linkedin-square, ::content .fa-pinterest, ::content .fa-pinterest-p, ::content .fa-pinterest-square, ::content .fa-reddit, ::content .fa-reddit-square, ::content .fa-share-alt, ::content .fa-share-square-o, ::content .fa-soundcloud, ::content .fa-tumblr, ::content .fa-tumblr-square, ::content .fa-twit, ::content .fa-twitter, ::content .fa-twitter-square, ::content .fa-vine, ::content .fa-youtube, ::content .fa-youtube-play, ::content .fa-youtube-square, ::content .faceBookButton, ::content .faceBookShareContainer, ::content .facebook-24x24, ::content .facebook-activity, ::content .facebook-badge, ::content .facebook-banner, ::content .facebook-banner-wrapper, ::content .facebook-bar, ::content .facebook-big-share, ::content .facebook-block, ::content .facebook-box, ::content .facebook-box-widget, ::content .facebook-broadcasting-widget, ::content .facebook-btn, ::content .facebook-button, ::content .facebook-button-link, ::content .facebook-circle, ::content .facebook-connect-dialog, ::content .facebook-container, ::content .facebook-count-single, ::content .facebook-facepile, ::content .facebook-fans, ::content .facebook-flyout, ::content .facebook-follow, ::content .facebook-follow-button, ::content .facebook-footer, ::content .facebook-ft, ::content .facebook-hover-horizontal, ::content .facebook-icon, ::content .facebook-icon-small, ::content .facebook-image, ::content .facebook-inner, ::content .facebook-like, ::content .facebook-like-bottom, ::content .facebook-like-box, ::content .facebook-like-button-head, ::content .facebook-like-large, ::content .facebook-like-message-holder, ::content .facebook-likebox, ::content .facebook-likebox-promo, ::content .facebook-link, ::content .facebook-menu, ::content .facebook-modal, ::content .facebook-module, ::content .facebook-p, ::content .facebook-recommend, ::content .facebook-right-rail, ::content .facebook-row, ::content .facebook-section, ::content .facebook-share, ::content .facebook-share-bottom, ::content .facebook-share-btn, ::content .facebook-share-button, ::content .facebook-share-link, ::content .facebook-share-story, ::content .facebook-sharer, ::content .facebook-sharetool, ::content .facebook-sidebar, ::content .facebook-sidebar-outer, ::content .facebook-social, ::content .facebook-social-likes, ::content .facebook-top, ::content .facebook-top-button, ::content .facebook-twitter, ::content .facebook-twitter-share, ::content .facebook-twitter-wrap, ::content .facebook-widget, ::content .facebook.icon, ::content .facebook2, ::content .facebookActivity, ::content .facebookBloc_png, ::content .facebookBox, ::content .facebookBtn, ::content .facebookButtonDiv, ::content .facebookConnect, ::content .facebookContainer, ::content .facebookCountDiv, ::content .facebookFanBox, ::content .facebookFeed, ::content .facebookFrame, ::content .facebookGroup, ::content .facebookHomepageBottom, ::content .facebookIcon, ::content .facebookImage, ::content .facebookItem, ::content .facebookLike, ::content .facebookLikeBox, ::content .facebookLikeboxContentContainer, ::content .facebookLink, ::content .facebookOptions, ::content .facebookOuter, ::content .facebookRec, ::content .facebookRecentActivity, ::content .facebookRecommend, ::content .facebookRecommendation, ::content .facebookShare, ::content .facebookShareAlert, ::content .facebookShareIcon, ::content .facebookShareToolsContainer, ::content .facebookSharer, ::content .facebookSite, ::content .facebookSocialIcon, ::content .facebookTwitterIcons, ::content .facebookWidgetry, ::content .facebookWrapperModule, ::content .facebook_24, ::content .facebook_activity, ::content .facebook_badge, ::content .facebook_block, ::content .facebook_box, ::content .facebook_box_sidebar, ::content .facebook_btn, ::content .facebook_button, ::content .facebook_button_bg, ::content .facebook_cont, ::content .facebook_fanbox, ::content .facebook_follower, ::content .facebook_icn, ::content .facebook_icon, ::content .facebook_image, ::content .facebook_indiv_widget, ::content .facebook_large, ::content .facebook_like, ::content .facebook_like_box, ::content .facebook_logo, ::content .facebook_net, ::content .facebook_new, ::content .facebook_plugin_container, ::content .facebook_plugin_parent_block, ::content .facebook_pop {
+    display: none;
+}
+
+.agreements-bunners{
+  margin-right: 8px;
+  margin-left: 8px;
+    width: 16px;
+    height: 16px;
+}
+
+
+
+input {
+      border-radius: 6px;
+}
+
+.new-statment-div{
+  margin: 20px;
+}
+
+.search-span{
+  font-weight: bold;
+}
+
+.voting-bar{
+  position: absolute;
+  bottom: 7px;
+  left: 0px;
+  text-align: center;
+  display: flex;  
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  z-index: 10;
+
+}
+.voting-bar-tree-claim{
+     position: absolute;
+    text-align: center;
+    display: flex;
+    margin: auto;
+    padding: 0;
+    width: 300px;
+    z-index: 10;
+    padding: 10px;
+  
+}
+
+.voting-bar-logconn{
+
+ position: relative;
+  bottom: 1px;
+  display: flex;  
+  margin-top: 10px;
+  padding: 0;
+  width: 100%;
+  
+}
+
+
+.rate-type{
+    display: inline-block;
+    font-size: 12px;
+    border-bottom-width: thin;
+    border-bottom-style: solid;
+    border-bottom-color: inherit;
+    padding-bottom: 7px;
+    
+    
+}
+
+.rate-type-pressed{
+  font-weight: bold;
+    border-top-width: thin;
+
+}
+
+.connector-line{
+  position: absolute;
+  border-bottom: groove;
+  z-index: 9999999;
+  width: 10px;
+}
+.connector-line2{
+  position: absolute;
+
+}
+
+.cons-row{
+  height: 400px;
+}
+.tree-claim{
+font-size: 7px;
+
+}
+.tree-connector{
+  text-align: center;
+  vertical-align: middle;
+  display: inline-block;
+  border: groove;
+  border-width: 2px;
+
+}
+.tree{
+  background-color: #f0f2f5;
+
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
+} 
+
+.container {
+  position: relative;
+  height: 200px;
+
+}
+
+.centered-element {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
