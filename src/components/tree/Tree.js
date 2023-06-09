@@ -11,6 +11,8 @@ import ExpVotingBar from '../ExpVotingBar.js'
 import AddingConnector from "../AddinConnector.js";
 import Connectors from "./Connectors.js";
 import DiagonalLines from "./DiagonalLines.js";
+import StraightLines from "./StraightLines.js";
+
 
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 
@@ -137,7 +139,6 @@ const Tree = (props) =>{
     //recursion - gives the exact locations to each tree connector and target claim
     const buildConnectorsLocations = (rows,connectorsObj,connectorsLocations,claimsLocations,curGen,currConnectorID,rightestLocationInRow) =>{
        
-
         var currConnector = connectorsObj[currConnectorID];
         var parentsLocations = [];
         var connector;
@@ -271,83 +272,6 @@ const Tree = (props) =>{
     
     }
 
-    const buildLines2 = (connectorsObj,connectorsLocations,claimsLocations) =>{
-
-        var targetClaimsLocations = {};
-        var lines = [];
-        var voteButtons = [];
-        var newVoteButton={};
-        var newLine ={};
-        var clickedHeightBonus = 0;
-        var connector;
-        var connectorLoc
-        var targetClaimLocation;
-        var targetConnectorID;
-
-        for(var connectorID in connectorsLocations){
-            connector = connectorsObj[connectorID];
-            targetConnectorID = parseInt(connector.targetConnectorID,10)
-
-            if(connectorID == clickedConnector){
-                clickedHeightBonus = CONNECTOR_HEIGTH;
-            }
-            else{
-                clickedHeightBonus=0;
-            }
-
-            connectorLoc = {
-                offsetLeft: connectorsLocations[connectorID].offsetLeft +(CONNECTOR_WIDTH/2),
-                offsetTop:  connectorsLocations[connectorID].offsetTop +CONNECTOR_HEIGTH +clickedHeightBonus*1,
-            }
-
-            if(!!claimsLocations[connector.targetClaimID]){
-
-                for(var ind01=0;ind01<claimsLocations[connector.targetClaimID].length;ind01++){
-                    if(
-                        !!connectorLoc && 
-                        (claimsLocations[connector.targetClaimID][ind01].offsetTop - connectorLoc.offsetTop) > 0 && 
-                        (claimsLocations[connector.targetClaimID][ind01].offsetTop - connectorLoc.offsetTop)< CONNECTOR_HEIGTH*2.5
-                    )
-                    {
-                        targetClaimLocation = claimsLocations[connector.targetClaimID][ind01];
-                        targetClaimsLocations[connectorID] = targetClaimLocation;
-                      
-                        newLine = {
-                            connectorLoc:connectorLoc,
-                            claimLoc:{
-                                offsetLeft:targetClaimLocation.offsetLeft,
-                                offsetTop:targetClaimLocation.offsetTop,
-
-                            },
-                            color:logConnTypes[connector.type].color,
-                            connectorID:connectorID
-                        }
-
-                        newVoteButton ={
-                            offsetTop: connectorLoc.offsetTop-15,
-                            offsetLeft: connectorLoc.offsetLeft,
-                            connector: connectorsObj[connectorID],
-                            connectorID: connectorID,
-                            votes: connectorsObj[connectorID].votes
-                        }
-                        break;
-                    }
-                }
-                if(connectorsLocations[targetConnectorID].offsetLeft <= connectorsLocations[connectorID].offsetLeft){
-                    newLine.claimLoc.offsetLeft = (2*connectorsLocations[targetConnectorID].offsetLeft - newLine.claimLoc.offsetLeft) + CONNECTOR_WIDTH; 
-                }
-            }
-            if(!!newLine.connectorLoc && !!newLine.claimLoc){
-                lines.push(newLine);
-                voteButtons.push(newVoteButton);
-
-            }
-        }
-   
-        return {lines:lines,voteButtons:voteButtons};
-    }
-
-
     const getBiggestRow = (rows) =>{
         var biggestRow = 1;
         for(var ind01=0;ind01<rows.length;ind01++){
@@ -402,320 +326,6 @@ const Tree = (props) =>{
  
      }
 
-
-     const buildLines = (connectorsObj,connectorsLocations,claimsLocations) =>{
-
-        var targetClaimsLocations = {}
-
-        var lines = [];
-        var voteButtons = [];
-        var newLine; 
-        var newLine2;
-        var newLine3;
-        var connector;
-        var connectorID;
-        var row;
-        var targetClaimLocation;
-        var targetClaimID;
-        var connectorLocation;
-        var connectorHeigthFactor;
-        var lineWidthFactor;
-        var widthDistance;
-        var lineHeight;
-        var lineHeigthFactor;
-        var lineWidghFactor;
-        var directionRight = false;
-        var currHeightFactor;
-        var currWidthFactor;
-        var lineLeftPos;
-        var lineWidth;
-        var newVoteButton;
-        var clickedHeightBonus = 0;
-
-
-        const buildFirstLine = () =>{
-
-            if(directionRight == true){
-                lineHeight = currHeightFactor - currCount*lineHeigthFactor;
-            }
-            else{
-                lineHeight = currHeightFactor + currCount*lineHeigthFactor;
-            }
-
-            newLine = {
-                connectorID:connectorID,
-                offsetTop: connectorLocation.offsetTop + clickedHeightBonus, 
-                offsetLeft: connectorLocation.offsetLeft, 
-                height: lineHeight,
-                width:1,
-                borderBottom: 'none',
-                borderLeft: 'groove',
-                color:logConnTypes[connector.type].color
-                
-            }
-
-            
-            newVoteButton ={
-                offsetTop: connectorLocation.offsetTop+10,
-                offsetLeft: connectorLocation.offsetLeft,
-                connector: connectorsObj[connectorID],
-                connectorID: connectorID,
-                votes: connectorsObj[connectorID].votes
-            }
-         
-        }
-        const buildSecondLine = () =>{
-           
-            if(directionRight == false){
-                lineLeftPos = connectorLocation.offsetLeft - (widthDistance - 2);
-                lineWidth = widthDistance  ;
-            }
-            else{
-                lineLeftPos = connectorLocation.offsetLeft;
-                lineWidth = widthDistance ;
-                if(lineWidth < 0){
-                    //lineWidth = 0;
-                }
-            }
-                newLine2 = {   
-                connectorID:connectorID,                 
-                offsetTop: connectorLocation.offsetTop + clickedHeightBonus + newLine.height,
-                offsetLeft: lineLeftPos,
-                height: 1,
-                width: lineWidth,
-                borderBottom: 'groove',
-                borderLeft: 'none',
-                color:logConnTypes[connector.type].color
-            }   
-        }
-        const buildThirdLine = () =>{
-            if(directionRight == true){
-                lineLeftPos = lineLeftPos + lineWidth;
-            }
-         
-            lineHeight =targetClaimLocation.offsetTop - (connectorLocation.offsetTop + newLine.height)
-
-            newLine3 ={
-                connectorID:connectorID,    
-                offsetTop: connectorLocation.offsetTop + clickedHeightBonus + newLine.height,
-                offsetLeft: lineLeftPos,
-                width:1,
-                height:lineHeight,
-                borderBottom: 'none',
-                borderLeft: 'groove',
-                color:logConnTypes[connector.type].color
-            }
-        }
-        const updateWidthAndHeigthFactors = (currCount,connectorIndex) => {
-            currWidthFactor = lineWidghFactor;
-            for(var ind03=connectorIndex;ind03<row.length;ind03++){
-                var connectorID2 = row[ind03].ID;
-                var connector2 = connectorsObj[row[ind03].ID];
-                if(connector2.targetConnectorID == connector.targetConnectorID){
-                    currWidthFactor += lineWidghFactor;
-                }
-                
-            }
-            if(connectorLocation.offsetLeft > connectorsLocations[connector.targetConnectorID].offsetLeft){
-                widthDistance = connectorLocation.offsetLeft - targetClaimLocation.offsetLeft2 
-            }
-            else{
-                widthDistance = connectorLocation.offsetLeft - targetClaimLocation.offsetLeft ;
-            }
-            currHeightFactor = (CONNECTOR_TOP_GAP-CONNECTOR_HEIGTH)/2;
-            if(widthDistance < 0){
-                widthDistance = Math.abs(widthDistance);
-                if(directionRight == false){
-                    currHeightFactor = (CONNECTOR_TOP_GAP-CONNECTOR_HEIGTH)/2;
-                    currCount = 0;
-                }
-                directionRight = true;
-            }
-            else{
-             
-
-                if(directionRight == true){
-                    currHeightFactor = (CONNECTOR_TOP_GAP-CONNECTOR_HEIGTH)/2.5;
-                    currCount = 0;
-                }
-                directionRight = false;  
-            }
-
-                return currCount;
-        }
-
-        for(var ind01=0;ind01<rows.length;ind01++){
-            row = rows[ind01];
-            lineHeigthFactor = (CONNECTOR_TOP_GAP-CONNECTOR_HEIGTH)/2/row.length;
-            lineWidghFactor =2;
-            
-            var currCount =0;
-            for(var ind02=0;ind02<row.length;ind02++){
-
-                connectorID = row[ind02].ID;
-                connector = connectorsObj[connectorID];
-                
-                connectorLocation = {
-                    offsetLeft:connectorsLocations[connectorID].offsetLeft +CONNECTOR_WIDTH/2,
-                    offsetTop:connectorsLocations[connectorID].offsetTop + CONNECTOR_HEIGTH + clickedHeightBonus,
-                }    
-
-                targetClaimLocation =null;
-     
-                if(claimsLocations[connector.targetClaimID]){
-
-                    for(var ind03=0;ind03<claimsLocations[connector.targetClaimID].length;ind03++){
-                        if(!!connectorLocation && claimsLocations[connector.targetClaimID][ind03].offsetTop - connectorsLocations[connectorID].offsetTop > 30)
-                        {
-                            
-                            targetClaimLocation = claimsLocations[connector.targetClaimID][ind03];
-                            break;
-                        }
-                    }
-                }
-
-                if(!!connectorLocation && !!targetClaimLocation){
-
-                    if(connectorID == clickedConnector){
-                        clickedHeightBonus = CONNECTOR_HEIGTH;
-                    }
-                    else{
-                        clickedHeightBonus=0;
-                    }
-                    //connectorLocation.offsetLeft+=(CONNECTOR_WIDTH/2);
-                    currCount = updateWidthAndHeigthFactors(currCount,ind02);
-                    buildFirstLine();
-                    buildSecondLine();
-                    buildThirdLine();
-                    
-                    lines.push(newLine); 
-                    voteButtons.push(newVoteButton)
-                    lines.push(newLine2); 
-                    lines.push(newLine3); 
-                    targetClaimsLocations[connector.ID] = targetClaimLocation
-                    
-                    currCount++;
-                }  
-            }
-        }
-
-        return {lines:lines,voteButtons:voteButtons};
-     }
-
-     const Line2 = (props) =>{
-
-        var line = props.line;
-        var connectorID =  parseInt(line.connectorID,10);
-
-        var lineColorTemp;
-        
-        if(connectorsOutOfFocus.includes(connectorID) || connectorID == clickedConnector){
-            lineColorTemp = '#9ba6a5';
-        }
-        else{
-            lineColorTemp = line.color
-        }
-        
-        const [lineColor,setLineColor] = useState(lineColorTemp);
-
-        return(
-            <div 
-                style={{
-                    position:'absolute',
-                    left:line.connectorLoc.offsetLeft,
-                    top:line.connectorLoc.offsetTop,
-                    color :lineColor,
-                    pointerEvents: 'none',
-                }}
-            >
-                <RotatedSquare connectorLoc={line.connectorLoc} claimLoc={line.claimLoc} color={lineColor} />
-            </div>
-        )
-     }
-
-     const Lines2 = (props) =>{
-        var lines = props.lines;
-        return(
-            <div>
-                {lines.map((line,index)=>
-                    <Line2 key={index} line={line}/>
-                )}
-            </div>
-        )
-        
-     }
- 
-     const Line = (props) =>{
-
-        var line = props.line;
-        var lineColorTemp;
-        
-        if(connectorsOutOfFocus.includes(line.connectorID) || line.connectorID == clickedConnector){
-            lineColorTemp = '#9ba6a5';
-        }
-        else{
-            lineColorTemp = line.color
-        }
-        
-        const [lineColor,setLineColor] = useState(lineColorTemp);
-
-        return(
-            <div 
-            className="connector-line2" 
-            style={{
-                top:line.offsetTop,
-                left:line.offsetLeft,
-                height:line.height,
-                width:line.width,
-                color :lineColor,
-                backgroundColor:lineColor,
-            }}> 
-         </div>
-        )
-     }
-     const Lines =(props) =>{
-        var lines = props.lines;
-        return(
-            <div>
-                {lines.map((line,index)=>
-                    <Line key={index} line={line}/>
-                )}
-            </div>
-        )
-     }
-
-     const VoteButtons =(props) =>{
-
-        var voteButtons = props.voteButtons;
-
-        return(
-            <div>
-                {voteButtons.map((voteButton,index)=> 
-                    <div 
-                        style={{
-                            position:'absolute',
-                            top:voteButton.offsetTop+8,
-                            left:voteButton.offsetLeft-5,
-                        }}
-                    >
-                    {!props.connectorsOutOfFocus.includes(parseInt(voteButton.connectorID,10)) && (voteButton.connectorID != 0) && (voteButton.connectorID != clickedConnector) && (!!props.connectorsObj[voteButton.connectorID]) &&
-
-                        <ExpVotingBar 
-                            userID={props.userID}
-                            claim={voteButton.connector}
-                            votes={voteButton.votes}
-                            votingTypes={connectorsVotingTypesObj}
-                            claimType ='tree-logconn' 
-                            updateVotes={manageData.updateVotes}
-                            status={props.connectorsObj[voteButton.connectorID].userVoteStatus} //bug
-                        /> 
-                    }
-                    </div>
-                )}
-            </div>
-        )
-     }
-
      const treeClaimClick = (claimID,gen,connectorID,rows) =>{
 
         if(claimID != clickedClaim.ID){
@@ -735,88 +345,6 @@ const Tree = (props) =>{
         }
      }
      
-     const RotatedSquare = (props) => {
-
-        function arcctg(x) { return Math.PI / 2 - Math.atan(x); }
-
-        var squareSize = 50;
-        const anchorPointX = 0;
-        const anchorPointY = 0;
-
-        
-        var lineWidth;
-        var posTop;
-        var posLeft;
-
-        var tan;
-        var angel;
-        var isDirectionLeft = false;
-        if(props.claimLoc.offsetLeft - props.connectorLoc.offsetLeft < 0){
-            isDirectionLeft = true;
-        }
-        var widthDistance = Math.abs(props.claimLoc.offsetLeft - props.connectorLoc.offsetLeft) ;
-        var heigthDistance = Math.abs(props.claimLoc.offsetTop - props.connectorLoc.offsetTop) ;
-
-        tan = heigthDistance/widthDistance;
-
-        angel = 90 - arcctg(tan)*57.2958;
-        if(!!isDirectionLeft){
-            angel = 180 - angel;
-        }
-
-        if(angel != 90){
-            lineWidth =Math.abs(widthDistance/Math.cos(angel/57.2958));
-        }
-        else{
-            lineWidth = heigthDistance;
-        }
-
-        squareSize = lineWidth;
-      
-        const squareStyle = {
-          height: squareSize,
-          width: squareSize,
-          borderTop:'groove',
-          borderTopColor:props.color,
-          borderTopWidth:'1px'
-        };
-      
-        return (
-            <View
-                style={[
-                    squareStyle,
-                    {
-                        transform: [
-                            {translateX: anchorPointX - squareSize / 2},
-                            {translateY: anchorPointY - squareSize / 2},
-                            {rotateZ:angel +'deg'},
-                            {translateX: -(anchorPointX - squareSize / 2)},
-                            {translateY: -(anchorPointY - squareSize / 2)},
-                        ],
-                    },
-                ]}
-            />
-        );
-      };
-
-
-
-     function isNumber(n) {
-        return !isNaN(parseFloat(n)) && isFinite(n);
-      }
-
-     function getNumberPart(claimID) {
-        var onlynum = null;
-        for(var ind01=2;ind01<claimID.length;ind01++){
-            onlynum = claimID.slice(0,ind01);
-            if(!isNumber(onlynum)){
-                onlynum = claimID.slice(0,ind01-1);
-                return onlynum;
-            }
-        }
-        return onlynum;
-     }
-
     const myFunction = (pressedKey) =>{
         console.log(pressedKey);
         if(pressedKey == 'ArrowRight'){
@@ -824,19 +352,11 @@ const Tree = (props) =>{
         }
     }
 
-
-
     var connectorsLocations = {};
     var claimsLocations = {};
     var rows = buildRows(0,0,props.connectorsObj,[],[],[],-1);
     rows = rows.reverse();
-
     buildConnectorsLocations(rows,connectorsObj,connectorsLocations,claimsLocations,rows.length-1,0,{});
-
-    //var builtLinesTemp = buildLines(connectorsObj,connectorsLocations,claimsLocations);
-    var tempLines = buildLines2(connectorsObj,connectorsLocations,claimsLocations)
-    var connectorsLines = tempLines.lines;
-    var voteButtons = tempLines.voteButtons;
 
     var biggestRow = 0;
     biggestRow = getBiggestRow(rows);
@@ -870,7 +390,6 @@ const Tree = (props) =>{
  
     },[props.tree]);
 
- 
 
      return(
             <div className="tree" style={{width:biggestRow*2000 +'px',height:((rows.length+1)*CONNECTOR_TOP_GAP)+'px'}}>

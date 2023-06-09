@@ -75,7 +75,7 @@ const DiagonalLines = (props) =>{
 
 
 
-    const buildLines2 = (connectorsObj,connectorsLocations,claimsLocations) =>{
+    const buildLines = (connectorsObj,connectorsLocations,claimsLocations) =>{
 
         var targetClaimsLocations = {};
         var lines = [];
@@ -292,7 +292,7 @@ const DiagonalLines = (props) =>{
         
     }
 
-    var tempLines = buildLines2(connectorsObj,connectorsLocations,claimsLocations);
+    var tempLines = buildLines(connectorsObj,connectorsLocations,claimsLocations);
     lines = tempLines.lines;
     voteButtons = tempLines.voteButtons;
 
