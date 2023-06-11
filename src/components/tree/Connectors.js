@@ -58,16 +58,16 @@ const Connectors = (props) =>{
 
     var connectorsOutOfFocus = props.data.connectorsOutOfFocus;
     var connectedClaims = props.data.connectedClaims;
-    var clickedClaim = props.data.clickedClaim;
-    var clickedConnector = props.data.clickedConnector;
     var connectorsLocations = props.data.connectorsLocations;
     var connectorsObj = props.data.connectorsObj;
     var treeID = props.data.treeID;
     var claims = props.data.claims;
     var rows = props.data.rows;
     var userID = props.data.userID;
+    var clickedClaim = props.data.clickedClaim;
+    var clickedConnector = props.data.clickedConnector;
+
     var scrollToConnector = props.scrollToConnector;
- 
     var treeClaimClick = props.treeClaimClick;
 
      const ConnectorsClaim = (props) =>{
@@ -151,7 +151,7 @@ const Connectors = (props) =>{
             border = 'solid';
             color = 'black';
         }  
-        if(props.connector.ID == props.clickedConnector){
+        if(props.connector.ID == clickedConnector){
 
             height*=2;
         }  
@@ -194,7 +194,7 @@ const Connectors = (props) =>{
                     </div>
                             <div style={{position:'relative',textAlign:'center', visibility:isVisible}}> 
                                 <div className={'add-connector-tree-container'} style={{position:'absolute',left:-(VOTING_BAR_WIDTH-CONNECTOR_WIDTH)/2}}>
-                                    <VotingBar  userID={userID} claim={clickedClaim} votes={clickedClaim.votes} votingTypes={claimsVotesTypesObj} claimType ='tree-claim' updateVotes={manageData.updateVotes} status={clickedClaim.userVoteStatus}/>    
+                                    <VotingBar  userID={props.userID} claim={clickedClaim} votes={clickedClaim.votes} votingTypes={claimsVotesTypesObj} claimType ='tree-claim' updateVotes={manageData.updateVotes} status={clickedClaim.userVoteStatus}/>    
                                 </div>
                             </div>
                 </div>
@@ -205,7 +205,7 @@ const Connectors = (props) =>{
     return(
         <div style={{position:'absolute'}}>
             {Object.keys(connectorsLocations).map((connectorID,index) => 
-                <ConnectorContent key={index}  userID={userID}  connector={connectorsObj[connectorID]} connectorID={connectorID} reRenderTrees={props.reRenderTrees} clickedConnector={props.clickedConnector}/>
+                <ConnectorContent key={index}  userID={userID}  connector={connectorsObj[connectorID]} connectorID={connectorID} reRenderTrees={props.reRenderTrees} clickedConnector={clickedConnector}/>
             )}
         </div>    
     )
