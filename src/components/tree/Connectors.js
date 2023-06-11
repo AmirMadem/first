@@ -149,6 +149,9 @@ const Connectors = (props) =>{
         if(props.connector.claims.includes(clickedClaim.ID)){
             border = 'solid';
             color = 'black';
+        }  
+        if(props.connector.ID == props.clickedConnector){
+
             height*=2;
         }  
         var left ='0px';
@@ -201,7 +204,7 @@ const Connectors = (props) =>{
     return(
         <div style={{position:'absolute'}}>
             {Object.keys(connectorsLocations).map((connectorID,index) => 
-                <ConnectorContent key={index}  userID={props.userID}  connector={connectorsObj[connectorID]} connectorID={connectorID} reRenderTrees={props.reRenderTrees}/>
+                <ConnectorContent key={index}  userID={props.userID}  connector={connectorsObj[connectorID]} connectorID={connectorID} reRenderTrees={props.reRenderTrees} clickedConnector={props.clickedConnector}/>
             )}
         </div>    
     )

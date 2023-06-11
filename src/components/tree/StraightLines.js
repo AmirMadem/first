@@ -232,16 +232,8 @@ const StraightLines = (props) =>{
 
                 targetClaimLocation =null;
      
-                if(claimsLocations[connector.targetClaimID]){
-
-                    for(var ind03=0;ind03<claimsLocations[connector.targetClaimID].length;ind03++){
-                        if(!!connectorLocation && claimsLocations[connector.targetClaimID][ind03].offsetTop - connectorsLocations[connectorID].offsetTop > 30)
-                        {
-                            
-                            targetClaimLocation = claimsLocations[connector.targetClaimID][ind03];
-                            break;
-                        }
-                    }
+                if(!!claimsLocations[connector.targetConnectorID] && claimsLocations[connector.targetConnectorID][connector.targetClaimID]){
+                    targetClaimLocation = claimsLocations[connector.targetConnectorID][connector.targetClaimID];    
                 }
 
                 if(!!connectorLocation && !!targetClaimLocation){

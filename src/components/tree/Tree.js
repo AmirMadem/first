@@ -90,6 +90,7 @@ const Tree = (props) =>{
         curConnectorID = parseInt(curConnectorID,10);
         var currConnector;
         var newConnector
+        var lastClaim;
 
         //preventing duplicates 
         if(!!usedConnectors[curConnectorID]){
@@ -114,23 +115,19 @@ const Tree = (props) =>{
 
         rows[curGen].push(newConnector);
 
-        const addConnectorsCount = (currConnector) =>{
-            if(!usedClaims.includes(currConnector.claims[ind01])){
-                rows[curGen][rows[curGen].length-1].connectors++;
-            }
-        }
+  
 
         //recursion heart - caliing buildRows for every connector that target any claim in the current connector
         for(var ind01=currConnector.claims.length-1;ind01>-1;ind01--){
-
             for(var connectorID in connectorsObj){
-                if(connectorsObj[connectorID].targetClaimID == currConnector.claims[ind01]){
-                    addConnectorsCount(currConnector);
+                if(connectorsObj[connectorID].targetClaimID == currConnector.claims[ind01] && (!usedClaims.includes(currConnector.claims[ind01]) || lastClaim == currConnector.claims[ind01])){
+                    usedClaims.push(currConnector.claims[ind01]);
+                    lastClaim = currConnector.claims[ind01];
                     buildRows(curGen+1,connectorID,connectorsObj,rows,usedConnectors,usedClaims,curConnectorID);
                 }
-
             }
-            usedClaims.push(currConnector.claims[ind01]);
+            lastClaim = null;
+            
         } 
    
         return rows;
@@ -185,8 +182,8 @@ const Tree = (props) =>{
             
             }
         }
-        // ---- recursion heart End ----
 
+        // ---- recursion heart End ----
         // if connector have more than one parent - get location of 2 lefties and rightest parents and center current connector between them
         if(parentsLocations.length >1){
             var closesttLocation = -1;
@@ -204,6 +201,12 @@ const Tree = (props) =>{
 
             //center current connector between lefties and rightest parents 
             connectorsLocations[currConnectorID] = (farestLocation + closesttLocation)/2
+
+             //ckecking if the current connector is not right enough  and if so - push it right
+            if(connectorsLocations[currConnectorID] <= rightestLocationInRow[curGen]+0.5){
+                connectorsLocations[currConnectorID] = rightestLocationInRow[curGen] +0.75;
+            }
+
             rightestLocationInRow[curGen] = connectorsLocations[currConnectorID];
         
         }
@@ -211,8 +214,13 @@ const Tree = (props) =>{
         //case current connector have single parent - locating current connector relative to it
         else if(parentsLocations.length >0){
             connectorsLocations[currConnectorID] = parentsLocations[0]+0.5;
+
+            //ckecking if the current connector is not right enough  and if so - push it right
+            if(connectorsLocations[currConnectorID] <= rightestLocationInRow[curGen]+0.5){
+                connectorsLocations[currConnectorID] = rightestLocationInRow[curGen] +0.75;
+            }
+
             rightestLocationInRow[curGen] = connectorsLocations[currConnectorID];
-        
         }
 
         //case current connector have 0 parents - locating current connector relative to the rigthest connector on the tree
@@ -252,24 +260,19 @@ const Tree = (props) =>{
         var claimsAmount = connectorsObj[currConnectorID].claims.length;
         var factor = CONNECTOR_HEIGTH/7/claimsAmount;
         var currClaimID;
-        var newClaimLoc;
+        var currConnectorClaimsLocations = {};
         for(var ind01=0;ind01<claimsAmount;ind01++){
             currClaimID = connectorsObj[currConnectorID].claims[ind01]
-            if(!claimsLocations[currClaimID]){
-                claimsLocations[currClaimID] = [];
-            }
-
-            newClaimLoc = {
+      
+            currConnectorClaimsLocations[currClaimID] = {
                 offsetLeft:connectorsLocations[currConnectorID].offsetLeft - factor*(ind01+1) ,
                 offsetTop:connectorsLocations[currConnectorID].offsetTop - factor*(ind01+1),
                 offsetLeft2: connectorsLocations[currConnectorID].offsetLeft + CONNECTOR_WIDTH + factor*(ind01+1),
                 offsetTop2: connectorsLocations[currConnectorID].offsetTop - factor*(ind01+1),
-            }
-            claimsLocations[currClaimID].push(newClaimLoc);
+            };
         }
-        
+        claimsLocations[currConnectorID] = JSON.parse(JSON.stringify(currConnectorClaimsLocations));
         return currentConnectorLoc;
-    
     }
 
     const getBiggestRow = (rows) =>{
@@ -352,10 +355,9 @@ const Tree = (props) =>{
         }
     }
 
-    var connectorsLocations = {};
-    var claimsLocations = {};
     var rows = buildRows(0,0,props.connectorsObj,[],[],[],-1);
     rows = rows.reverse();
+
     buildConnectorsLocations(rows,connectorsObj,connectorsLocations,claimsLocations,rows.length-1,0,{});
 
     var biggestRow = 0;
@@ -397,7 +399,7 @@ const Tree = (props) =>{
                 {!!claimsLocations &&
                     <div>
                         <div style={{position:'absolute'}}>
-                            <DiagonalLines connectorsOutOfFocus={connectorsOutOfFocus} connectedClaims={connectedClaims} clickedClaim={clickedClaim} clickedConnector={clickedConnector} connectorsLocations={connectorsLocations} claimsLocations={claimsLocations} connectorsObj={connectorsObj} scrollToConnector={scrollToConnector} treeID={treeID} claims={claims} rows={rows} treeClaimClick={treeClaimClick} userID={props.userID}/>  
+                            <StraightLines connectorsOutOfFocus={connectorsOutOfFocus} connectedClaims={connectedClaims} clickedClaim={clickedClaim} clickedConnector={clickedConnector} connectorsLocations={connectorsLocations} claimsLocations={claimsLocations} connectorsObj={connectorsObj} scrollToConnector={scrollToConnector} treeID={treeID} claims={claims} rows={rows} treeClaimClick={treeClaimClick} userID={props.userID}/>  
                         </div>
                     </div>
                 }

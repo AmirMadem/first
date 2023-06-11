@@ -77,7 +77,6 @@ const DiagonalLines = (props) =>{
 
     const buildLines = (connectorsObj,connectorsLocations,claimsLocations) =>{
 
-        var targetClaimsLocations = {};
         var lines = [];
         var voteButtons = [];
         var newVoteButton={};
@@ -103,42 +102,30 @@ const DiagonalLines = (props) =>{
                 offsetLeft: connectorsLocations[connectorID].offsetLeft +(CONNECTOR_WIDTH/2),
                 offsetTop:  connectorsLocations[connectorID].offsetTop +CONNECTOR_HEIGTH +clickedHeightBonus*1,
             }
-
-            if(!!claimsLocations[connector.targetClaimID]){
-
-                for(var ind01=0;ind01<claimsLocations[connector.targetClaimID].length;ind01++){
-                    if(
-                        !!connectorLoc && 
-                        (claimsLocations[connector.targetClaimID][ind01].offsetTop - connectorLoc.offsetTop) > 0 && 
-                        (claimsLocations[connector.targetClaimID][ind01].offsetTop - connectorLoc.offsetTop)< CONNECTOR_HEIGTH*2.5
-                    )
-                    {
-                        targetClaimLocation = claimsLocations[connector.targetClaimID][ind01];
-                        targetClaimsLocations[connectorID] = targetClaimLocation;
-                      
-                        newLine = {
-                            connectorLoc:connectorLoc,
-                            claimLoc:{
-                                offsetLeft:targetClaimLocation.offsetLeft,
-                                offsetTop:targetClaimLocation.offsetTop,
-
-                            },
-                            color:logConnTypes[connector.type].color,
-                            connectorID:connectorID
-                        }
-
-                        newVoteButton ={
-                            offsetTop: connectorLoc.offsetTop-15,
-                            offsetLeft: connectorLoc.offsetLeft,
-                            connector: connectorsObj[connectorID],
-                            connectorID: connectorID,
-                            votes: connectorsObj[connectorID].votes
-                        }
-                        break;
-                    }
+            if(!!claimsLocations[connector.targetConnectorID] && !!claimsLocations[connector.targetConnectorID][connector.targetClaimID]){
+                targetClaimLocation = claimsLocations[connector.targetConnectorID][connector.targetClaimID];       
+                newLine = {
+                    connectorLoc:connectorLoc,
+                    claimLoc:{
+                        offsetLeft:targetClaimLocation.offsetLeft,
+                        offsetTop:targetClaimLocation.offsetTop,
+                    },
+                    color:logConnTypes[connector.type].color,
+                    connectorID:connectorID
                 }
+
+                newVoteButton ={
+                    offsetTop: connectorLoc.offsetTop-15,
+                    offsetLeft: connectorLoc.offsetLeft,
+                    connector: connectorsObj[connectorID],
+                    connectorID: connectorID,
+                    votes: connectorsObj[connectorID].votes
+                }
+                        
                 if(connectorsLocations[targetConnectorID].offsetLeft <= connectorsLocations[connectorID].offsetLeft){
-                    newLine.claimLoc.offsetLeft = (2*connectorsLocations[targetConnectorID].offsetLeft - newLine.claimLoc.offsetLeft) + CONNECTOR_WIDTH; 
+                    if(!!newLine.claimLoc && connectorsLocations[targetConnectorID]){
+                        newLine.claimLoc.offsetLeft = (2*connectorsLocations[targetConnectorID].offsetLeft - newLine.claimLoc.offsetLeft) + CONNECTOR_WIDTH; 
+                    }
                 }
             }
             if(!!newLine.connectorLoc && !!newLine.claimLoc){
