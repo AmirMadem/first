@@ -4,8 +4,6 @@ import manageData from '../../manageData.js';
 import ReactDOM from 'react-dom';
 import SearchinBox from "../SearchinBox.js";
 import { FiSearch } from 'react-icons/fi';
-import { Link } from 'react-scroll';
-import useDraggableScroll from 'use-draggable-scroll';
 import VotingBar from '../VotingBar.js'
 import ExpVotingBar from '../ExpVotingBar.js'
 import AddingConnector from "../AddinConnector.js";
@@ -59,19 +57,18 @@ const StraightLines = (props) =>{
     var lines = [];
     var voteButtons = [];
 
-    var connectorsOutOfFocus = props.connectorsOutOfFocus;
-    var connectedClaims = props.connectedClaims;
-    var clickedClaim = props.clickedClaim;
-    var clickedConnector = props.clickedConnector;
-    var connectorsLocations = props.connectorsLocations;
+    var connectorsOutOfFocus = props.data.connectorsOutOfFocus;
+    var connectedClaims = props.data.connectedClaims;
+    var clickedClaim = props.data.clickedClaim;
+    var clickedConnector = props.data.clickedConnector;
+    var connectorsLocations = props.data.connectorsLocations;
+    var connectorsObj = props.data.connectorsObj;
+    var treeID = props.data.treeID;
+    var claims = props.data.claims;
+    var rows = props.data.rows;
+    var userID = props.data.userID;
     var claimsLocations = props.claimsLocations;
-    var connectorsObj = props.connectorsObj;
-    var scrollToConnector = props.scrollToConnector;
-    var treeID = props.treeID;
-    var claims = props.claims;
-    var rows = props.rows;
-    var treeClaimClick = props.treeClaimClick;
-    var userID = props.userID;
+ 
 
     const buildLines = (connectorsObj,connectorsLocations,claimsLocations) =>{
 

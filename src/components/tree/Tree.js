@@ -392,14 +392,28 @@ const Tree = (props) =>{
  
     },[props.tree]);
 
+    var data = {
+
+        connectorsOutOfFocus:connectorsOutOfFocus,
+        connectedClaims:connectedClaims,
+        clickedClaim:clickedClaim,
+        clickedConnector:clickedConnector,
+        connectorsLocations:connectorsLocations,
+        connectorsObj:connectorsObj,
+        treeID:treeID,
+        claims:claims,
+        rows:rows,
+        userID:props.userID
+         
+    }
 
      return(
             <div className="tree" style={{width:biggestRow*2000 +'px',height:((rows.length+1)*CONNECTOR_TOP_GAP)+'px'}}>
-                <Connectors connectorsOutOfFocus={connectorsOutOfFocus} connectedClaims={connectedClaims} clickedClaim={clickedClaim} clickedConnector={clickedConnector} connectorsLocations={connectorsLocations} claimsLocations={claimsLocations} connectorsObj={connectorsObj} scrollToConnector={scrollToConnector} treeID={treeID} claims={claims} rows={rows} treeClaimClick={treeClaimClick} reRenderTrees={props.reRenderTrees} userID={props.userID}/>  
+                <Connectors data={data} scrollToConnector={scrollToConnector} treeClaimClick={treeClaimClick} reRenderTrees={props.reRenderTrees}/>  
                 {!!claimsLocations &&
                     <div>
                         <div style={{position:'absolute'}}>
-                            <StraightLines connectorsOutOfFocus={connectorsOutOfFocus} connectedClaims={connectedClaims} clickedClaim={clickedClaim} clickedConnector={clickedConnector} connectorsLocations={connectorsLocations} claimsLocations={claimsLocations} connectorsObj={connectorsObj} scrollToConnector={scrollToConnector} treeID={treeID} claims={claims} rows={rows} treeClaimClick={treeClaimClick} userID={props.userID}/>  
+                            <StraightLines data={data} claimsLocations={claimsLocations} />  
                         </div>
                     </div>
                 }

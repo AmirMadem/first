@@ -56,17 +56,18 @@ var claimsVotesTypesObj ={
 
 const Connectors = (props) =>{
 
-    var connectorsOutOfFocus = props.connectorsOutOfFocus;
-    var connectedClaims = props.connectedClaims;
-    var clickedClaim = props.clickedClaim;
-    var clickedConnector = props.clickedConnector;
-    var connectorsLocations = props.connectorsLocations;
-    var claimsLocations = props.claimsLocations;
-    var connectorsObj = props.connectorsObj;
+    var connectorsOutOfFocus = props.data.connectorsOutOfFocus;
+    var connectedClaims = props.data.connectedClaims;
+    var clickedClaim = props.data.clickedClaim;
+    var clickedConnector = props.data.clickedConnector;
+    var connectorsLocations = props.data.connectorsLocations;
+    var connectorsObj = props.data.connectorsObj;
+    var treeID = props.data.treeID;
+    var claims = props.data.claims;
+    var rows = props.data.rows;
+    var userID = props.data.userID;
     var scrollToConnector = props.scrollToConnector;
-    var treeID = props.treeID;
-    var claims = props.claims;
-    var rows = props.rows;
+ 
     var treeClaimClick = props.treeClaimClick;
 
      const ConnectorsClaim = (props) =>{
@@ -193,7 +194,7 @@ const Connectors = (props) =>{
                     </div>
                             <div style={{position:'relative',textAlign:'center', visibility:isVisible}}> 
                                 <div className={'add-connector-tree-container'} style={{position:'absolute',left:-(VOTING_BAR_WIDTH-CONNECTOR_WIDTH)/2}}>
-                                    <VotingBar  userID={props.userID} claim={clickedClaim} votes={clickedClaim.votes} votingTypes={claimsVotesTypesObj} claimType ='tree-claim' updateVotes={manageData.updateVotes} status={clickedClaim.userVoteStatus}/>    
+                                    <VotingBar  userID={userID} claim={clickedClaim} votes={clickedClaim.votes} votingTypes={claimsVotesTypesObj} claimType ='tree-claim' updateVotes={manageData.updateVotes} status={clickedClaim.userVoteStatus}/>    
                                 </div>
                             </div>
                 </div>
@@ -204,7 +205,7 @@ const Connectors = (props) =>{
     return(
         <div style={{position:'absolute'}}>
             {Object.keys(connectorsLocations).map((connectorID,index) => 
-                <ConnectorContent key={index}  userID={props.userID}  connector={connectorsObj[connectorID]} connectorID={connectorID} reRenderTrees={props.reRenderTrees} clickedConnector={props.clickedConnector}/>
+                <ConnectorContent key={index}  userID={userID}  connector={connectorsObj[connectorID]} connectorID={connectorID} reRenderTrees={props.reRenderTrees} clickedConnector={props.clickedConnector}/>
             )}
         </div>    
     )
