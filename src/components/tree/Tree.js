@@ -393,27 +393,46 @@ const Tree = (props) =>{
     },[props.tree]);
 
     var data = {
-
         connectorsOutOfFocus:connectorsOutOfFocus,
         connectedClaims:connectedClaims,
-        clickedClaim:clickedClaim,
-        clickedConnector:clickedConnector,
         connectorsLocations:connectorsLocations,
+        claimsLocations:claimsLocations,
         connectorsObj:connectorsObj,
-        treeID:treeID,
-        claims:claims,
         rows:rows,
-        userID:props.userID
-         
-    }
+        claims:claims,
+        treeID:treeID,
+        userID:userID,
+        clickedClaim:clickedClaim,
+        clickedConnector:clickedConnector
+        
 
+        
+    }
      return(
             <div className="tree" style={{width:biggestRow*2000 +'px',height:((rows.length+1)*CONNECTOR_TOP_GAP)+'px'}}>
-                <Connectors data={data} scrollToConnector={scrollToConnector} treeClaimClick={treeClaimClick} reRenderTrees={props.reRenderTrees}/>  
+                <Connectors 
+                    data = {data}
+                    scrollToConnector={scrollToConnector} 
+                    treeClaimClick={treeClaimClick} 
+                    reRenderTrees={props.reRenderTrees} 
+                />  
+
                 {!!claimsLocations &&
                     <div>
                         <div style={{position:'absolute'}}>
-                            <StraightLines data={data} claimsLocations={claimsLocations} />  
+                            <StraightLines 
+                                data = {data}
+                                connectorsOutOfFocus={connectorsOutOfFocus} 
+                                connectedClaims={connectedClaims} 
+                                clickedClaim={clickedClaim} 
+                                clickedConnector={clickedConnector} 
+                                connectorsLocations={connectorsLocations} 
+                                claimsLocations={claimsLocations} 
+                                connectorsObj={connectorsObj} 
+                                treeID={treeID} claims={claims} 
+                                rows={rows} 
+                                userID={props.userID}
+                            />  
                         </div>
                     </div>
                 }

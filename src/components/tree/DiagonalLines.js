@@ -4,6 +4,8 @@ import manageData from '../../manageData.js';
 import ReactDOM from 'react-dom';
 import SearchinBox from "../SearchinBox.js";
 import { FiSearch } from 'react-icons/fi';
+import { Link } from 'react-scroll';
+import useDraggableScroll from 'use-draggable-scroll';
 import VotingBar from '../VotingBar.js'
 import ExpVotingBar from '../ExpVotingBar.js'
 import AddingConnector from "../AddinConnector.js";
@@ -59,15 +61,18 @@ const DiagonalLines = (props) =>{
 
     var connectorsOutOfFocus = props.data.connectorsOutOfFocus;
     var connectedClaims = props.data.connectedClaims;
-    var clickedClaim = props.data.clickedClaim;
-    var clickedConnector = props.data.clickedConnector;
     var connectorsLocations = props.data.connectorsLocations;
     var connectorsObj = props.data.connectorsObj;
     var treeID = props.data.treeID;
     var claims = props.data.claims;
     var rows = props.data.rows;
     var userID = props.data.userID;
+    var clickedClaim = props.data.clickedClaim;
+    var clickedConnector = props.data.clickedConnector;
+
     var claimsLocations = props.claimsLocations;
+
+
 
     const buildLines = (connectorsObj,connectorsLocations,claimsLocations) =>{
 
