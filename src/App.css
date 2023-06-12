@@ -65,9 +65,7 @@
 }
 
 .fb-login-baners{
-     position: absolute;
     right: 0px;
-    height: inherit;
     background-color: inherit;
     vertical-align:middle;
     width: 200px;
