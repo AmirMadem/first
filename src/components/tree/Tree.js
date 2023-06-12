@@ -12,8 +12,6 @@ import AddingConnector from "../AddinConnector.js";
 import Connectors from "./Connectors.js";
 import DiagonalLines from "./DiagonalLines.js";
 import StraightLines from "./StraightLines.js";
-
-
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 
 
@@ -26,7 +24,7 @@ const SUPPORT =3;
 
 const CONNECTOR_WIDTH = 120;
 const CONNECTOR_HEIGTH = 60; 
-const CONNECTOR_LEFT_GAP = 180;
+const CONNECTOR_LEFT_GAP = 220;
 const CONNECTOR_TOP_GAP = 200;
 const VOTING_BAR_WIDTH = 300;
 
@@ -35,19 +33,6 @@ const logConnTypes ={0:{title:'Contradict',color:'red'},1:{title:'Weeken',color:
 
 var claimVoteTypes = [{ID:1,title:'',color:'green',fullName:'100% true !'},{ID:2,title:'',color:'blue',fullName:'mostly True...'},{ID:3,title:'',color:'yellow',fullName:'got a good feeling about it !'},{ID:4,title:'',color:'pink',fullName:'not specific enough'},{ID:5,title:'',color:'orange',fullName:'mostly False'},{ID:6,title:'',color:'red',fullName:'Complete Bullshit !'}]
 var votingTypes = claimVoteTypes;
-
-var connectorVotesTypes =  [
-	{ID:7,name:'False',title:'',color:'red',fullName:'False Claims and Wrong logical connection'},{ID:8,title:'',name:'FalseCorrect',color:'orange',fullName:'False Claims but Correct logical connection'},{ID:9,title:'',name:'TrueWrong',color:'blue',fullName:'True Claims but Wrong logical connection'},{ID:10,title:'',name:'True',color:'green',fullName:'True Claims and Correct logical connection'}
-		];
-
-var connectorsVotingTypesObj ={
-    
-    7:{ID:7,title:'',name:'False',color:'red',fullName:'False Claims and Wrong logical connection'},
-    8:{ID:8,title:'',name:'FalseCorrect',color:'orange',fullName:'False Claims but Correct logical connection'},
-    9:{ID:9,title:'',name:'TrueWrong',color:'blue',fullName:'True Claims but Wrong logical connection'},
-    10:{ID:10,title:'',name:'True',color:'green',fullName:'True Claims and Correct logical connection'}
-
-}
 
 var claimsVotesTypesObj ={
     1:{ID:1,title:'',name:'True',color:'green',fullName:'100% true !'},
@@ -258,17 +243,16 @@ const Tree = (props) =>{
         }
       
         var claimsAmount = connectorsObj[currConnectorID].claims.length;
-        var factor = CONNECTOR_HEIGTH/7/claimsAmount;
         var currClaimID;
         var currConnectorClaimsLocations = {};
         for(var ind01=0;ind01<claimsAmount;ind01++){
             currClaimID = connectorsObj[currConnectorID].claims[ind01]
       
             currConnectorClaimsLocations[currClaimID] = {
-                offsetLeft:connectorsLocations[currConnectorID].offsetLeft - factor*(ind01+1) ,
-                offsetTop:connectorsLocations[currConnectorID].offsetTop - factor*(ind01+1),
-                offsetLeft2: connectorsLocations[currConnectorID].offsetLeft + CONNECTOR_WIDTH + factor*(ind01+1),
-                offsetTop2: connectorsLocations[currConnectorID].offsetTop - factor*(ind01+1),
+                offsetLeft:connectorsLocations[currConnectorID].offsetLeft  ,
+                offsetTop:connectorsLocations[currConnectorID].offsetTop,
+                offsetLeft2: connectorsLocations[currConnectorID].offsetLeft + CONNECTOR_WIDTH ,
+                offsetTop2: connectorsLocations[currConnectorID].offsetTop ,
             };
         }
         claimsLocations[currConnectorID] = JSON.parse(JSON.stringify(currConnectorClaimsLocations));
@@ -341,6 +325,7 @@ const Tree = (props) =>{
 
             setConnectorsOutOfFocus(unConnectedConnectorsTemp);
             setClickedClaim(claim);
+            props.setClickedClaimTrees(claim)
             if(connectorID != clickedConnector){
                 setClickedConnector(connectorID);
             }
@@ -403,10 +388,7 @@ const Tree = (props) =>{
         treeID:treeID,
         userID:userID,
         clickedClaim:clickedClaim,
-        clickedConnector:clickedConnector
-        
-
-        
+        clickedConnector:clickedConnector 
     }
      return(
             <div className="tree" style={{width:biggestRow*2000 +'px',height:((rows.length+1)*CONNECTOR_TOP_GAP)+'px'}}>
@@ -420,18 +402,9 @@ const Tree = (props) =>{
                 {!!claimsLocations &&
                     <div>
                         <div style={{position:'absolute'}}>
-                            <StraightLines 
+                            <DiagonalLines 
                                 data = {data}
-                                connectorsOutOfFocus={connectorsOutOfFocus} 
-                                connectedClaims={connectedClaims} 
-                                clickedClaim={clickedClaim} 
-                                clickedConnector={clickedConnector} 
-                                connectorsLocations={connectorsLocations} 
                                 claimsLocations={claimsLocations} 
-                                connectorsObj={connectorsObj} 
-                                treeID={treeID} claims={claims} 
-                                rows={rows} 
-                                userID={props.userID}
                             />  
                         </div>
                     </div>

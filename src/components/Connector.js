@@ -10,6 +10,8 @@ import { Link } from 'react-scroll';
 import VotingBar from './VotingBar.js'
 import AddingConnector from "./AddinConnector.js";
 
+
+
 const logConnTypes ={0:'Contradict',1:'Weeken',2:'Aprove',3:'Enhance'};
 const logConnTypes2 ={0:{title:'Contradict',color:'red'},1:{title:'Weeken',color:'pink'},2:{title:'Aprove',color:'green'},3:{title:'Enhance',color:'blue'}};
 

@@ -21,7 +21,7 @@ const SUPPORT =3;
 
 const CONNECTOR_WIDTH = 120;
 const CONNECTOR_HEIGTH = 60; 
-const CONNECTOR_LEFT_GAP = 180;
+const CONNECTOR_LEFT_GAP = 220;
 const CONNECTOR_TOP_GAP = 200;
 const VOTING_BAR_WIDTH = 300;
 
@@ -137,12 +137,12 @@ const StraightLines = (props) =>{
         const buildSecondLine = () =>{
            
             if(directionRight == false){
-                lineLeftPos = connectorLocation.offsetLeft - (widthDistance - 2);
-                lineWidth = widthDistance  ;
+                lineLeftPos = connectorLocation.offsetLeft - (widthDistance+1 );
+                lineWidth = widthDistance +2  ;
             }
             else{
                 lineLeftPos = connectorLocation.offsetLeft;
-                lineWidth = widthDistance ;
+                lineWidth = widthDistance;
                 if(lineWidth < 0){
                     //lineWidth = 0;
                 }

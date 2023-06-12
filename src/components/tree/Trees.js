@@ -4,6 +4,7 @@ import manageData from '../../manageData.js';
 import ReactDOM from 'react-dom';
 import SearchinBox from "../SearchinBox.js";
 import Tree from "./Tree.js";
+import FullClaim from "../FullClaim.js";
 import { FiSearch } from 'react-icons/fi';
 import { Link } from 'react-scroll';
 import { useParams } from "react-router-dom";
@@ -17,6 +18,7 @@ const SUPPORT =3;
 
 const Trees = (props) =>{
 
+    console.log("trees re renders !!@@!!")
 
     let { userIDTemp } = useParams();
     let { firstClaimIDTemp } = useParams();
@@ -25,13 +27,16 @@ const Trees = (props) =>{
     if(!!firstClaimIDTemp){
          firstClaimID = JSON.parse(firstClaimIDTemp)
     }
+  
     if(!!userIDTemp){
         userID = JSON.parse(userIDTemp);
     }
 
+    var firstClaim = manageData.getSpceClaimVoted(firstClaimID);
 
     const [clickedTree,setClickedTree] = useState('tree0');
     const [clickedConnector,setClickedConnector] = useState(0);
+    const [clickedClaimTrees,setClickedClaimTrees] = useState(firstClaim)
  
 
     var biggestRows = [];
@@ -41,8 +46,9 @@ const Trees = (props) =>{
     var allGens = 0;
     var generalBiggestRow=1;
     var generalBiggestGens=1;
-    var usersConnectors = manageData.getUsersTreeObjects(userID)['connectors'];
-    var usersClaims= manageData.getUsersTreeObjects(userID)['claims'];
+    var usersTreeObjects =  manageData.getUsersTreeObjects(userID)
+    var usersConnectors = usersTreeObjects['connectors'];
+    var usersClaims= usersTreeObjects['claims'];
 
 
 
@@ -158,7 +164,8 @@ const Trees = (props) =>{
     const [allTrees,setAllTrees] = useState(trees)
 
     
-    const reRenderTrees = (newConnectorID,treeID) =>{
+    const reRenderTrees = (newConnectorID,treeID,claimID) =>{
+
         usersConnectors = manageData.getUsersTreeObjects(userID)['connectors'];
         usersClaims= manageData.getUsersTreeObjects(userID)['claims'];
         setClickedConnector(newConnectorID);
@@ -238,16 +245,30 @@ const Trees = (props) =>{
 
         return(
             <div>
-                {!firstClaimID && 
+
                     <div className="trees-footer">
-                        <div style={{margin:'10px'}}>
-                            <SearchinBox searchValue={searchValue} filterBySearch={filterBySearch}/>
-                        </div>
-                        {claims.map((claim,index)=>
-                            <div key={index} style={{display:'inline-block',marginRight:'15px' ,fontSize:'15px'}} onClick={() =>clickOnFooterClaim(claim.ID)}><a href='javascript:;'> - {claim.content} -</a></div>
-                        )}
+                        <div className = "tree-footer-navigate">
+                            <div style={{margin:'10px'}}>
+                                <SearchinBox searchValue={searchValue} filterBySearch={filterBySearch}/>
+                            </div>
+                            <div className="tree-footer-navigate-claims">
+                                {claims.map((claim,index)=>
+                                    <div key={index} style={{display:'inline-block',marginRight:'15px' ,fontSize:'15px'}} onClick={() =>clickOnFooterClaim(claim.ID)}><a href='javascript:;'> - {claim.content} -</a></div>
+                                )}
+                            </div>
+                            {!!clickedClaimTrees &&
+                            <div className="tree-footer-clicked-claim">
+                                <FullClaim 
+                                    userID={props.userID} 
+                                    claim ={props.clickedClaimTrees}
+                                    isOpen = {true}
+                                    isOnTree = {true}
+                                />
+                            </div>
+                            }
+                        </div>  
                     </div>
-                }
+                
              </div>
 
         )
@@ -270,11 +291,12 @@ const Trees = (props) =>{
                             reRenderTrees = {reRenderTrees}
                             clickedConnector ={clickedConnector}
                             clickedTree = {clickedTree}
+                            setClickedClaimTrees = {setClickedClaimTrees}
                         />
                     </div>
                 )}
             </div>  
-            <Footer claims={usersClaims} /> 
+            <Footer claims={usersClaims} clickedClaimTrees={clickedClaimTrees} userID={userID} /> 
                             
         </div>
     )

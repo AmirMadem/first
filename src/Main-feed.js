@@ -90,7 +90,9 @@ const MainFeed =(props) =>{
 
 		}	
 
-		const openClaim = (claimID,claimClicked) =>{
+		const openClaim = (claimID,claimClicked) =>{	
+
+			claimClicked =(claimID == clickTrail[clickTrail.length-1])
 			var newClaims;
 
 			if(claimClicked == false){
@@ -142,13 +144,15 @@ const MainFeed =(props) =>{
 							<AddClaim addNewClaim={addNewClaim}/>
 						}
 						{feedClaims.map((claim) =>
-							<FullClaim 
-								key={claim.ID} 
-								userID={props.userID} 
-								claim ={claim}
-								openClaim = {openClaim}
-								isOpen = {claim.ID == clickTrail[clickTrail.length-1]}
-							/>
+							<div className = "claim-container" onClick={() =>openClaim(claim.ID)}>
+								<FullClaim 
+									key={claim.ID} 
+									userID={props.userID} 
+									claim ={claim}
+									openClaim = {openClaim}
+									isOpen = {claim.ID == clickTrail[clickTrail.length-1]}
+								/>
+							</div>	
 						)} 
 					</div>
 				}

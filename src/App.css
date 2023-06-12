@@ -196,6 +196,23 @@
   height:150px;
   border-top: groove;
 }
+.tree-footer-navigate{
+  width:25%;
+  height: 100px;
+}
+.tree-footer-navigate-claims{
+  height: 100%;
+  overflow:auto;
+}
+.tree-footer-clicked-claim{
+  position: fixed;
+  bottom:-2px;
+  left: 25%;
+  max-height: 150px;
+  width: 75%;
+  padding:15px;
+  overflow: auto;
+}
 
 .add-conn-button-div{
   margin-right: 30px;

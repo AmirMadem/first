@@ -9,6 +9,7 @@ import useDraggableScroll from 'use-draggable-scroll';
 import VotingBar from '../VotingBar.js'
 import ExpVotingBar from '../ExpVotingBar.js'
 import AddingConnector from "../AddinConnector.js";
+import Wings from "./Wings.js"
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 
 
@@ -21,7 +22,7 @@ const SUPPORT =3;
 
 const CONNECTOR_WIDTH = 120;
 const CONNECTOR_HEIGTH = 60; 
-const CONNECTOR_LEFT_GAP = 180;
+const CONNECTOR_LEFT_GAP = 220;
 const CONNECTOR_TOP_GAP = 200;
 const VOTING_BAR_WIDTH = 300;
 
@@ -194,10 +195,19 @@ const Connectors = (props) =>{
                     </div>
                             <div style={{position:'relative',textAlign:'center', visibility:isVisible}}> 
                                 <div className={'add-connector-tree-container'} style={{position:'absolute',left:-(VOTING_BAR_WIDTH-CONNECTOR_WIDTH)/2}}>
-                                    <VotingBar  userID={props.userID} claim={clickedClaim} votes={clickedClaim.votes} votingTypes={claimsVotesTypesObj} claimType ='tree-claim' updateVotes={manageData.updateVotes} status={clickedClaim.userVoteStatus}/>    
+                                    <VotingBar  
+                                        userID={props.userID} 
+                                        claim={clickedClaim} 
+                                        votes={clickedClaim.votes} 
+                                        votingTypes={claimsVotesTypesObj} 
+                                        claimType ='tree-claim' 
+                                        updateVotes={manageData.updateVotes} 
+                                        status={clickedClaim.userVoteStatus}
+                                    />    
                                 </div>
                             </div>
                 </div>
+                {false && <Wings connectorLocation={connectorsLocations[props.connectorID]} color={color}/>}
             </div>    
         )
     }
