@@ -220,8 +220,8 @@
 .connectors{
   display: inline-block;
   width: 100%;
-  margin-top: 30px;
-  margin-bottom: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .contradicting-part{
   color:crimson;
@@ -501,6 +501,8 @@ input {
   padding: 0;
   width: 100%;
   z-index: 10;
+  border-style: groove;
+  border-width: 3px;
 
 }
 .voting-bar-tree-claim{
@@ -530,18 +532,13 @@ input {
 .rate-type{
     display: inline-block;
     font-size: 12px;
-    border-bottom-width: thin;
-    border-bottom-style: solid;
-    border-bottom-color: inherit;
     padding-bottom: 7px;
-    
-    
+      
 }
 
 .rate-type-pressed{
   font-weight: bold;
-    border-top-width: thin;
-
+    border-radius: 8px;
 }
 
 .connector-line{

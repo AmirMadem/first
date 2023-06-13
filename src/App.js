@@ -6,6 +6,8 @@ import AppBody from "./AppBody.js";
 import Trees from "./components/tree/Trees.js"
 import { Routes, Route } from 'react-router-dom';
 
+let screenHeight = window.screen.height;
+
 function App() {
 
   console.log("App-Renders");
@@ -14,8 +16,9 @@ function App() {
   const [userName,setUserName] = useState("");
   const [userID,setUserID] = useState("");
 
+
   return (
-    <div className="App">
+    <div className="App" style={{minHeight:screenHeight}}>
       <Routes>
         <Route path='/trees' element={<Trees/>}></Route>
         <Route path='/trees/:userIDTemp' element={<Trees/>}></Route>

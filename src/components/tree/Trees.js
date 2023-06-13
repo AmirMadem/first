@@ -159,8 +159,7 @@ const Trees = (props) =>{
     else{
         trees = buildOneTree(usersConnectors,usersClaims,firstClaimID)
     }
-    console.log("trees")
-    console.log(trees)
+
     const [allTrees,setAllTrees] = useState(trees)
 
     

@@ -7,7 +7,6 @@ import { FiSearch } from 'react-icons/fi';
 import { Link } from 'react-scroll';
 import useDraggableScroll from 'use-draggable-scroll';
 import VotingBar from '../VotingBar.js'
-import ExpVotingBar from '../ExpVotingBar.js'
 import AddingConnector from "../AddinConnector.js";
 import Connectors from "./Connectors.js";
 import DiagonalLines from "./DiagonalLines.js";

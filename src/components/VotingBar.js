@@ -5,6 +5,7 @@ import manageData from '../manageData.js';
 const onVoting = (votingData) =>{
 	
 	if(!!votingData.userID){
+		
 		var userID = votingData.userID;
 		var claimID = votingData.claimID;
 		var currentClick = votingData.currentClick;              
@@ -16,8 +17,6 @@ const onVoting = (votingData) =>{
 		var updateVotes = votingData.updateVotes;
 		var claimType = votingData.claimType;
 		var claims = votingData.claims;
-
-
 
 		if(!votes[currentClick]){
 			votes[currentClick] = 0;
@@ -89,7 +88,7 @@ const VotingBar = (props) =>{
 			votes:votes,
 			setVotes:setVotes,
 			updateVotes:props.updateVotes,
-			setExpVStatus:props.setExpVStatus
+			setExpVStatus:props.setExpVStatus,
 		};
 		if(!!props.claim.claims){
 			votingData.claims = props.claim.claims;
@@ -101,7 +100,7 @@ const VotingBar = (props) =>{
 	var rateWidth = 100/(Object.keys(props.votingTypes).length) + '%';
 
 	return(
-			<div className={votingBarClass}>
+			<div className={votingBarClass} style={{zIndex:'99999',backgroundColor:'white',borderRadius:'18px'}}>
 				{Object.keys(props.votingTypes).map((voteType,index) =>						
 	  				<div key={index} 
 						className={voteType == chosenVoteType ? chosenRateClass : unChosenRateClass} 

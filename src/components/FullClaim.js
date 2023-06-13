@@ -11,6 +11,10 @@ import VotingBar from './VotingBar.js'
 import AddingConnector from "./AddinConnector.js";
 import Tree from "./tree/Tree.js"
 import Trees from "./tree/Trees.js"
+import ExpVotingBar from './ExpVotingBar.js'
+import {PieChart} from './PieChart.js'
+
+
 import Dom, { Link as DomLink,useNavigate } from 'react-router-dom'
 
 
@@ -37,11 +41,17 @@ const InnerConnector =(props) =>{
 
 const FullClaim =(props) =>{
 
-	console.log("FullClaim props")
-	console.log(props)
-
 	var claimDomElementID = "claim" + props.claim.ID;
 	var statuses = {};
+
+	const tempData = [
+		["Task", "Hours per Day"],
+		["Work", 1],
+		["Eat", 2],
+		["Commute", 2],
+		["Watch TV", 2],
+		["Sleep", 7],
+	  ];
 
 	for(var ind01=0;ind01<4;ind01++){
 		if(!!props.claim.connectors && !!props.claim.connectors[ind01]){
@@ -64,7 +74,17 @@ const FullClaim =(props) =>{
 					<div>
 						<DomLink style={{textDecoration:'none'}} to={linkToTrees} target='_blank'> 🌳 </DomLink>
 						<span>{props.claim.content}</span>
-						<VotingBar  userID={props.userID} claim={props.claim} votes={props.claim.votes} votingTypes={claimsVotesTypesObj} claimType ='claim' updateVotes={manageData.updateVotes} status={props.claim.userVoteStatus}/>
+						<div style={{position:'absolute',right:'0px',top:'20px'}}>
+							<div style={{position:'absolute',width:'150px',right:'0px',top:'0px'}}>
+								<PieChart data={tempData} votes = {props.claim.votes} title ='Left'/>
+							</div>
+							<div style={{position:'absolute',width:'150px',right:'150px',top:'0px'}}>
+								<PieChart data={tempData} votes = {props.claim.votes} title ='Right'/>
+							</div>
+						</div>		
+						<div style={{position:'absolute',bottom:'15px'}}>
+							<ExpVotingBar  userID={props.userID} claim={props.claim} votes={props.claim.votes} votingTypes={claimsVotesTypesObj} claimType ='claim' updateVotes={manageData.updateVotes} status={props.claim.userVoteStatus} isOnFeed={true}/>
+						</div>
 					</div>
 				}
 				{!!props.isOnTree &&

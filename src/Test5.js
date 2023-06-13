@@ -311,5 +311,8 @@ for(var connectorID in connectorsObj){
 }
 }
 
+
+<div>{!!votes[voteType] ? votes[voteType] : '0'}</div>
+
 <Lines lines={connectorsLines} />
                             <div><VoteButtons userID={userID} connectorsObj={connectorsObj} voteButtons={voteButtons} connectorsOutOfFocus={connectorsOutOfFocus}/></div>

@@ -126,7 +126,10 @@ const manageData = {
 	},
 
 	updateVotes:function(claimID,userID,action,voteType,claimType,claims){
-		
+
+		console.log("claimID")
+		console.log(claimID)
+
 		if(claimType != 'logconn' && claimType != 'tree-logconn'){
 
 			if(action == 'remove'){
@@ -138,13 +141,11 @@ const manageData = {
 		}
 		else
 		{
-
 			if(action == 'remove'){
 				getData.removeConnectorVote(claimID,userID,voteType);
 			}
 			else if(action == 'add'){
 				getData.addConnectorVote(claimID,userID,voteType);
-
 			}
 		}
 	},
