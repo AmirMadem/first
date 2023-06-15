@@ -12,6 +12,7 @@ const ExpVotingBar = (props) =>{
     const [isMouseOver,setIsMouseOver] = useState(false);
     const [backgroundColor,setBackgroundColor] = useState("#FFFFFFF");
     const [status,setStatus] = useState();
+
     var right;
     var bottom;
     var width;
@@ -38,8 +39,11 @@ const ExpVotingBar = (props) =>{
         width='300px'
         claimType = 'tree-logconn'
     }
-
-    
+   if(!!props.isOnFooter){
+        right= '150px'
+        bottom='-55px' 
+    }
+  
 
     const mouseOverVoteButton = () =>{
         console.log("mouseOverVoteButton")
@@ -53,9 +57,11 @@ const ExpVotingBar = (props) =>{
     const mouseOverVote = () =>{
         clearTimeout(timer);
         timer = null;
-        timer = setTimeout(() => {
-            setIsMouseOver(true);
-        },500) 
+        if(!!props.userID){
+            timer = setTimeout(() => {
+                setIsMouseOver(true);
+            },500) 
+        }
         
     }
     const mouseOutVote = () =>{
@@ -89,7 +95,7 @@ const ExpVotingBar = (props) =>{
                 :
                 <div style={{color:color,width:'33.333%',textAlign:'center',backgroundColor:backgroundColor}} onMouseOver={()=>mouseOverVoteButton()} onMouseOut={()=>mouseOutVoteButton()} onClick={(event) =>voteClick(event)}>
                     {!!voteStatusName ?
-                        <span>{voteStatusName}</span> 
+                        <span style={{fontWeight:'bold'}}>{voteStatusName}</span> 
                         :
                         <div><span >⚖️ </span><span>Vote</span></div>
                     }

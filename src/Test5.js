@@ -316,3 +316,18 @@ for(var connectorID in connectorsObj){
 
 <Lines lines={connectorsLines} />
                             <div><VoteButtons userID={userID} connectorsObj={connectorsObj} voteButtons={voteButtons} connectorsOutOfFocus={connectorsOutOfFocus}/></div>
+
+
+                            <div style={{position:'relative',textAlign:'center', visibility:isVisible}}> 
+                                <div className={'add-connector-tree-container'} style={{position:'absolute',left:-(VOTING_BAR_WIDTH-CONNECTOR_WIDTH)/2}}>
+                                    <VotingBar  
+                                        userID={props.userID} 
+                                        claim={clickedClaim} 
+                                        votes={clickedClaim.votes} 
+                                        votingTypes={claimsVotesTypesObj} 
+                                        claimType ='tree-claim' 
+                                        updateVotes={manageData.updateVotes} 
+                                        status={clickedClaim.userVoteStatus}
+                                    />    
+                                </div>
+                            </div>

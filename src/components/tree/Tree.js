@@ -16,6 +16,7 @@ import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 
 
 
+
 const CONTRADICT = 0;
 const WEEKEN = 1;
 const APROVE = 2;
@@ -26,21 +27,6 @@ const CONNECTOR_HEIGTH = 60;
 const CONNECTOR_LEFT_GAP = 220;
 const CONNECTOR_TOP_GAP = 200;
 const VOTING_BAR_WIDTH = 300;
-
-
-const logConnTypes ={0:{title:'Contradict',color:'red'},1:{title:'Weeken',color:'purple'},2:{title:'Aprove',color:'green'},3:{title:'Support',color:'blue'}};
-
-var claimVoteTypes = [{ID:1,title:'',color:'green',fullName:'100% true !'},{ID:2,title:'',color:'blue',fullName:'mostly True...'},{ID:3,title:'',color:'yellow',fullName:'got a good feeling about it !'},{ID:4,title:'',color:'pink',fullName:'not specific enough'},{ID:5,title:'',color:'orange',fullName:'mostly False'},{ID:6,title:'',color:'red',fullName:'Complete Bullshit !'}]
-var votingTypes = claimVoteTypes;
-
-var claimsVotesTypesObj ={
-    1:{ID:1,title:'',name:'True',color:'green',fullName:'100% true !'},
-    2:{ID:2,title:'',name:'Mostly True',color:'blue',fullName:'Mostly True...'},
-    3:{ID:3,title:'',name:'Positive',color:'yellow',fullName:'Got a good feeling about it !'},
-    4:{ID:4,title:'',name:'Undefined',color:'pink',fullName:'Un clear or not specific enough'},
-    5:{ID:5,title:'',name:'Mostly False',color:'orange',fullName:'Got a good feeling about it !'},
-    6:{ID:6,title:'',name:'False',color:'red',fullName:'Complete Bullshit !'},
-}
 
 const Tree = (props) =>{
 
@@ -324,6 +310,7 @@ const Tree = (props) =>{
 
             setConnectorsOutOfFocus(unConnectedConnectorsTemp);
             setClickedClaim(claim);
+
             props.setClickedClaimTrees(claim)
             if(connectorID != clickedConnector){
                 setClickedConnector(connectorID);

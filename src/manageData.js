@@ -45,6 +45,90 @@ const manageData = {
 
 		return votesByClaims;
 	},
+	getSpecTreeClaimsAndConnectors:function(firstClaimID,claimID,claims,connectors,specTreeClaims,specTreeConnectors){
+			var currConnector;
+			var currClaimID;
+	
+			for(var connectorID in connectors){
+				currConnector = connectors[connectorID];
+				if(currConnector.targetClaimID == claimID){
+					specTreeConnectors[connectorID] = currConnector;
+					for(var ind01=0;ind01<currConnector.claims.length;ind01++){
+						currClaimID = currConnector.claims[ind01];
+						if(!specTreeClaims[currClaimID]){
+							specTreeClaims[currClaimID] = claims[currClaimID];
+							manageData.getSpecTreeClaimsAndConnectors(firstClaimID,currClaimID,claims,connectors,specTreeClaims,specTreeConnectors);
+						}
+					}	
+				}
+			}
+			specTreeClaims[firstClaimID] = claims[firstClaimID];
+	
+		return {claims:specTreeClaims,connectors:specTreeConnectors};
+	},
+	buildTrees:function(userID,firstClaimID){
+
+		var allUsersTreeObjects = manageData.getUsersTreeObjects(userID);
+		var allConnectorsObj = allUsersTreeObjects['connectors'];
+		var allClaimsObj = allUsersTreeObjects['claims'];
+
+		var trees =[];
+        var usedClaims ={};
+        var firstClaim;
+        var firstConnector;
+		if(!!firstClaimID){
+			allUsersTreeObjects = manageData.getSpecTreeClaimsAndConnectors(firstClaimID,firstClaimID,allClaimsObj,allConnectorsObj,{},{});
+			allConnectorsObj = allUsersTreeObjects['connectors'];
+			allClaimsObj = allUsersTreeObjects['claims'];
+			
+			firstConnector ={
+				ID:0,
+				targetClaimID:'none',
+				type:"claim",
+				claims:[firstClaimID]
+			}
+			var tree = {}
+			var tempConnectors = Object.assign({},allConnectorsObj)
+			tempConnectors[0] = firstConnector;
+
+			tree.connectorsObj = tempConnectors;
+			tree.claims = allClaimsObj;
+			trees.push(tree);
+
+		}
+		else{
+			for(var connectorID in allConnectorsObj){
+
+				for(var ind01=0;ind01<allConnectorsObj[connectorID].claims.length;ind01++){
+					usedClaims[allConnectorsObj[connectorID].claims[ind01]] = true;
+				}           
+			}
+
+			for(var claim in allClaimsObj){
+				if(!usedClaims[claim]){
+					firstClaim = claim;
+					firstConnector ={
+						ID:0,
+						targetClaimID:'none',
+						type:"claim",
+						claims:[firstClaim]
+					}
+					var tree = {}
+					var tempConnectors = Object.assign({},allConnectorsObj)
+					tempConnectors[0] = firstConnector;
+					tree.connectorsObj = tempConnectors;
+					tree.claims = manageData.getSpecTreeClaimsAndConnectors(firstClaim,firstClaim,allClaimsObj,allConnectorsObj,{},{})['claims'];
+					trees.push(tree);
+				}
+			}
+		}
+		for(var ind01=1;ind01<trees.length;ind01++){
+			for(var claimID in trees[ind01].claims){
+				trees[0].claims[claimID]=  allClaimsObj[claimID];
+			}
+		}
+		return trees;
+	},
 	getUsersTreeObjects:function(userID){
 		var userTreeConnectors = {};
 		var allConnectors = getData.getConnectors();
@@ -226,9 +310,6 @@ const manageData = {
 		}
 		return specClaim;
 	},
-
-
-
 
 	getContentByClaims:function(){
 		var contentByClaims = {};

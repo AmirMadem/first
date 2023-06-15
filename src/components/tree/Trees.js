@@ -32,7 +32,7 @@ const Trees = (props) =>{
         userID = JSON.parse(userIDTemp);
     }
 
-    var firstClaim = manageData.getSpceClaimVoted(firstClaimID);
+    var firstClaim = manageData.getSpceClaimVoted(firstClaimID,userID);
 
     const [clickedTree,setClickedTree] = useState('tree0');
     const [clickedConnector,setClickedConnector] = useState(0);
@@ -46,72 +46,9 @@ const Trees = (props) =>{
     var allGens = 0;
     var generalBiggestRow=1;
     var generalBiggestGens=1;
-    var usersTreeObjects =  manageData.getUsersTreeObjects(userID)
-    var usersConnectors = usersTreeObjects['connectors'];
-    var usersClaims= usersTreeObjects['claims'];
+    var footerClaims;
 
 
-
-    const buildOneTree = (allConnectorsObj,allClaimsObj,firstClaimID) =>{
-        var trees = [];
-        var firstConnector ={
-            ID:0,
-            targetClaimID:'none',
-            type:"claim",
-            claims:[firstClaimID]
-        }
-        var tree = {}
-        var tempConnectors = Object.assign({},allConnectorsObj)
-        tempConnectors[0] = firstConnector;
-
-        tree.connectorsObj = tempConnectors;
-        tree.claims = allClaimsObj;
-        trees.push(tree);
-
-        return trees;
-    }
-
-    const buildTrees = (allConnectorsObj,allClaimsObj) =>{
-        var trees =[];
-        var usedClaims ={};
-        var firstClaim;
-        var firstConnector;
-        
-        for(var connectorID in allConnectorsObj){
-
-            for(var ind01=0;ind01<allConnectorsObj[connectorID].claims.length;ind01++){
-                usedClaims[allConnectorsObj[connectorID].claims[ind01]] = true;
-            }           
-        }
-
-        for(var claim in allClaimsObj){
-            if(!usedClaims[claim]){
-                firstClaim = claim;
-                firstConnector ={
-                    ID:0,
-                    targetClaimID:'none',
-                    type:"claim",
-                    claims:[firstClaim]
-                }
-                var tree = {}
-                var tempConnectors = Object.assign({},allConnectorsObj)
-                tempConnectors[0] = firstConnector;
-
-                tree.connectorsObj = tempConnectors;
-                tree.claims = allClaimsObj;
-                trees.push(tree);
-            }
-        }
-
-        return trees;
-
-    }
-
-    const calculateWidth = () =>{
-
-    }
-
-	
     const buildRows = (curGen,curConnectorID,connectorsObj,rows,usedConnectors) =>{
         
         curConnectorID = parseInt(curConnectorID,10);
@@ -154,34 +91,33 @@ const Trees = (props) =>{
 
     var trees = []
     if(!firstClaimID){
-        trees = buildTrees(usersConnectors,usersClaims);
+        trees = manageData.buildTrees(userID);
+        footerClaims = trees[0].claims;
     }
     else{
-        trees = buildOneTree(usersConnectors,usersClaims,firstClaimID)
+        trees = manageData.buildTrees(userID,firstClaimID);
+        footerClaims = trees[0].claims;
     }
 
     const [allTrees,setAllTrees] = useState(trees)
 
-    
     const reRenderTrees = (newConnectorID,treeID,claimID) =>{
 
-        usersConnectors = manageData.getUsersTreeObjects(userID)['connectors'];
-        usersClaims= manageData.getUsersTreeObjects(userID)['claims'];
         setClickedConnector(newConnectorID);
         setClickedTree(treeID);
         var allTreesTemp;
         if(!firstClaimID){
-            allTreesTemp = (buildTrees(usersConnectors,usersClaims));
+            allTreesTemp = manageData.buildTrees(userID);
+
         }
         else{
-            allTreesTemp = (buildOneTree(usersConnectors,usersClaims,firstClaimID));
+            allTreesTemp = manageData.buildTrees(userID,firstClaimID);
         }
         setAllTrees(allTreesTemp)
     }
     function isNumber(n) {
         return !isNaN(parseFloat(n)) && isFinite(n);
     }
-
 
     function getNumberPart(claimID) {
         var onlynum = null;
@@ -194,7 +130,6 @@ const Trees = (props) =>{
         }
         return onlynum;
      }
-
 
 
     const Footer = (props) =>{
@@ -244,32 +179,30 @@ const Trees = (props) =>{
 
         return(
             <div>
-
-                    <div className="trees-footer">
-                        <div className = "tree-footer-navigate">
-                            <div style={{margin:'10px'}}>
-                                <SearchinBox searchValue={searchValue} filterBySearch={filterBySearch}/>
-                            </div>
-                            <div className="tree-footer-navigate-claims">
-                                {claims.map((claim,index)=>
-                                    <div key={index} style={{display:'inline-block',marginRight:'15px' ,fontSize:'15px'}} onClick={() =>clickOnFooterClaim(claim.ID)}><a href='javascript:;'> - {claim.content} -</a></div>
-                                )}
-                            </div>
-                            {!!clickedClaimTrees &&
+                <div className="trees-footer">
+                    <div className = "tree-footer-navigate">
+                        <div style={{margin:'10px'}}>
+                            <SearchinBox searchValue={searchValue} filterBySearch={filterBySearch}/>
+                        </div>
+                        <div className="tree-footer-navigate-claims">
+                            {claims.map((claim,index)=>
+                                <div key={index} style={{display:'inline-block',marginRight:'15px' ,fontSize:'15px'}} onClick={() =>clickOnFooterClaim(claim.ID)}><a href='javascript:;'> - {claim.content} -</a></div>
+                            )}
+                        </div>
+                        {!!clickedClaimTrees &&
                             <div className="tree-footer-clicked-claim">
                                 <FullClaim 
                                     userID={props.userID} 
                                     claim ={props.clickedClaimTrees}
                                     isOpen = {true}
                                     isOnTree = {true}
+                                    isOnFooter ={true}
                                 />
                             </div>
-                            }
-                        </div>  
-                    </div>
-                
-             </div>
-
+                        }
+                    </div>  
+                </div>
+            </div>
         )
     }
 
@@ -295,8 +228,7 @@ const Trees = (props) =>{
                     </div>
                 )}
             </div>  
-            <Footer claims={usersClaims} clickedClaimTrees={clickedClaimTrees} userID={userID} /> 
-                            
+            <Footer claims={footerClaims} clickedClaimTrees={clickedClaimTrees} userID={userID} />                
         </div>
     )
 }

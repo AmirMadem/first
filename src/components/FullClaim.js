@@ -88,10 +88,15 @@ const FullClaim =(props) =>{
 					</div>
 				}
 				{!!props.isOnTree &&
-					<div style={{textAlign:'center'}}>
-						<DomLink style={{textDecoration:'none'}} to={linkToTrees} target='_blank'> 🌳 </DomLink>
-						<span>{props.claim.content}</span>
-					</div>
+					<div style={{marginBottom:'15px'}}>
+						<div style={{textAlign:'center',width:'50%', display:'inline-block'}}>
+							<DomLink style={{textDecoration:'none'}} to={linkToTrees} target='_blank'> 🌳 </DomLink>
+							<span>{props.claim.content}</span>
+						</div>
+						<div style={{textAlign:'center',width:'50%',display:'inline-block'}}>
+							<ExpVotingBar  userID={props.userID} claim={props.claim} votes={props.claim.votes} votingTypes={claimsVotesTypesObj} claimType ='claim' updateVotes={manageData.updateVotes} status={props.claim.userVoteStatus} isOnFeed={true} isOnFooter={true}/>
+						</div>
+					</div>	
 				}
 			{!!props.isOpen  &&
 			<div>

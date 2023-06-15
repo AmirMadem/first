@@ -206,7 +206,7 @@
   position: fixed;
   bottom:-2px;
   left: 25%;
-  max-height: 150px;
+  height: 150px;
   width: 75%;
   padding:15px;
   overflow: auto;
@@ -503,6 +503,8 @@ input {
   z-index: 10;
   border-style: groove;
   border-width: 3px;
+  border-radius: 8px;
+  overflow:hidden;
 
 }
 .voting-bar-tree-claim{
@@ -514,6 +516,10 @@ input {
     width: 300px;
     z-index: 10;
     padding: 10px;
+
+    border-style: groove;
+    border-width: 3px;
+    border-radius: 8px;
   
 }
 
@@ -538,7 +544,6 @@ input {
 
 .rate-type-pressed{
   font-weight: bold;
-    border-radius: 8px;
 }
 
 .connector-line{

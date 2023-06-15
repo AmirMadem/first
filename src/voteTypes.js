@@ -10,12 +10,12 @@ var connectorsVotingTypesObj ={
 }
 
 var claimsVotesTypesObj ={
-    1:{ID:1,title:'True',name:'True',color:'green',fullName:'100% true !'},
-    2:{ID:2,title:'Mostly True',name:'Mostly True',color:'blue',fullName:'Mostly True...'},
-    3:{ID:3,title:'Positive',name:'Positive',color:'yellow',fullName:'Got a good feeling about it !'},
-    4:{ID:4,title:'Undefined',name:'Undefined',color:'pink',fullName:'Un clear or not specific enough'},
-    5:{ID:5,title:'Mostly False',name:'Mostly False',color:'orange',fullName:'Mostly wrong !'},
-    6:{ID:6,title:'False',name:'False',color:'red',fullName:'Complete Bullshit !'},
+    1:{ID:1,title:'True',name:'True',color:'green',backgroundColor:'#d3f6d1',fullName:'100% true !'},
+    2:{ID:2,title:'Mostly True',name:'Mostly True',color:'blue',backgroundColor:'#bbe4e9',fullName:'Mostly True...'},
+    3:{ID:3,title:'Positive',name:'Positive',color:'#f0d43a',backgroundColor:'#fdffab',fullName:'Got a good feeling about it !'},
+    4:{ID:4,title:'Undefined',name:'Undefined',color:'#ff347f',backgroundColor:'#f48db4',fullName:'Un clear or not specific enough'},
+    5:{ID:5,title:'Mostly False',name:'Mostly False',color:'#f96d00',backgroundColor:'#f8f398',fullName:'Mostly wrong !'},
+    6:{ID:6,title:'False',name:'False',color:'#dc2f2f',backgroundColor:'#e67a7a',fullName:'Complete Bullshit !'},
 }
 
 export {connectorsVotingTypesObj};

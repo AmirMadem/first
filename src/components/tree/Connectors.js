@@ -192,19 +192,6 @@ const Connectors = (props) =>{
                             />
                         )} 
                     </div>
-                            <div style={{position:'relative',textAlign:'center', visibility:isVisible}}> 
-                                <div className={'add-connector-tree-container'} style={{position:'absolute',left:-(VOTING_BAR_WIDTH-CONNECTOR_WIDTH)/2}}>
-                                    <VotingBar  
-                                        userID={props.userID} 
-                                        claim={clickedClaim} 
-                                        votes={clickedClaim.votes} 
-                                        votingTypes={claimsVotesTypesObj} 
-                                        claimType ='tree-claim' 
-                                        updateVotes={manageData.updateVotes} 
-                                        status={clickedClaim.userVoteStatus}
-                                    />    
-                                </div>
-                            </div>
                 </div>
                 {false && <Wings connectorLocation={connectorsLocations[props.connectorID]} color={color}/>}
             </div>    
