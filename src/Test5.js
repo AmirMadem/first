@@ -375,3 +375,5 @@ for(var connectorID in connectorsObj){
 							)}
 						</div>
 					</div> 
+
+                    <button onClick={addNewClaim}>Add</button>

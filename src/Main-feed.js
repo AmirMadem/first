@@ -173,7 +173,7 @@ const MainFeed =(props) =>{
 					<Info/>	
 						:
 					<div>
-						{(props.currentTab == 'profile' && currentFeedTab == 'Statements' || currentFeedTab == 1) &&
+						{(props.currentTab == 'profile' && (currentFeedTab == 'Statements' || currentFeedTab == 1)) &&
 							<AddClaim addNewClaim={addNewClaim}/>
 						}
 						{feedClaims.map((claim) =>

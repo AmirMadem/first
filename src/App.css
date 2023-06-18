@@ -350,7 +350,30 @@
   width: 100%;
 }
 
+.add-new-claim-submit-container{
+  text-align: center;
+  width: 100%;
+  margin-top: 15px;
+}
 
+.add-new-claim-submit:disabled{
+  background-color: #e4e6eb;
+  color:#bec2c6;
+}
+
+.add-new-claim-submit{
+ 
+  background-color: #1b74e4;
+  color: white;
+  width: 50%;
+  margin: auto;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.add-new-claim-text{
+  border: none;
+}
 
 .chosen{
   font-weight: bold;
