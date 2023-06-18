@@ -2,7 +2,7 @@
 import React, { useState, useEffect,useRef} from "react";
 import getData from '../getData.js';
 import manageData from '../manageData.js';
-import {connectorsVotingTypesObj, claimsVotesTypesObj} from '../voteTypes.js';
+import {connectorsVotingTypesObj, claimsVotesTypesObj,connectorTypes} from '../voteTypes.js';
 import ReactDOM from 'react-dom';
 import SearchinBox from "./SearchinBox.js";
 import { FiSearch } from 'react-icons/fi';
@@ -17,9 +17,6 @@ import {PieChart} from './PieChart.js'
 
 import Dom, { Link as DomLink,useNavigate } from 'react-router-dom'
 
-
-
-const connectorTypes ={0:'Contradict',1:'Weeken',2:'Aprove',3:'Enhance'};
 
 const InnerConnector =(props) =>{
 	var linkTo = "claim"+ props.conGroup.targetClaimID;
@@ -56,7 +53,7 @@ const FullClaim =(props) =>{
 	for(var ind01=0;ind01<4;ind01++){
 		if(!!props.claim.connectors && !!props.claim.connectors[ind01]){
 			for(var ind02=0;ind02<props.claim.connectors[ind01].length;ind02++){
-				if(!!props.claim &&  !!props.claim.connectors[ind01] && !!props.claim.connectors[ind01][ind02]){
+				if(!!props.claim.connectors[ind01][ind02]){
 					statuses[props.claim.connectors[ind01][ind02].ID] = props.claim.connectors[ind01][ind02].userVoteStatus;
 				}
 			}
@@ -71,14 +68,16 @@ const FullClaim =(props) =>{
 		{!!props.claim &&
 			<div>
 				{!props.isOnTree &&
-					<div>
-						<DomLink style={{textDecoration:'none'}} to={linkToTrees} target='_blank'> 🌳 </DomLink>
-						<span>{props.claim.content}</span>
-						<div style={{position:'absolute',right:'0px',top:'20px'}}>
-							<div style={{position:'absolute',width:'150px',right:'0px',top:'0px'}}>
+					<div style={{width:'100%'}}> 
+						<div style={{maxWidth:'68%'}}>
+							<DomLink style={{textDecoration:'none'}} to={linkToTrees} target='_blank'> 🌳 </DomLink>
+							<span>{props.claim.content}</span>
+						</div>
+						<div style={{maxWidth:'32%'}}>
+							<div style={{position:'absolute',width:'80px',right:'0px',top:'15px'}}>
 								<PieChart data={tempData} votes = {props.claim.votes} title ='Left'/>
 							</div>
-							<div style={{position:'absolute',width:'150px',right:'150px',top:'0px'}}>
+							<div style={{position:'absolute',width:'80px',right:'80px',top:'15px'}}>
 								<PieChart data={tempData} votes = {props.claim.votes} title ='Right'/>
 							</div>
 						</div>		

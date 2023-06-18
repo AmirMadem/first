@@ -8,18 +8,9 @@ import SearchinBox from "./SearchinBox.js";
 import { FiSearch } from 'react-icons/fi';
 import { Link } from 'react-scroll';
 import VotingBar from './VotingBar.js'
+import ExpVotingBar from './ExpVotingBar.js'
 import AddingConnector from "./AddinConnector.js";
-
-
-
-const logConnTypes ={0:'Contradict',1:'Weeken',2:'Aprove',3:'Enhance'};
-const logConnTypes2 ={0:{title:'Contradict',color:'red'},1:{title:'Weeken',color:'pink'},2:{title:'Aprove',color:'green'},3:{title:'Enhance',color:'blue'}};
-
-var logConnVotingTypes =  [
-	{ID:7,name:'False',title:'',color:'red',fullName:'False Claims and Wrong logical connection'},{ID:8,title:'',color:'orange',fullName:'False Claims but Correct logical connection'},{ID:9,title:'',color:'blue',fullName:'True Claims but Wrong logical connection'},{ID:10,title:'',color:'green',fullName:'True Claims and Correct logical connection'}
-		];
-var claimVoteTypes = [{ID:1,title:'True',color:'green',fullName:'100% true !'},{ID:2,title:'M True',color:'blue',fullName:'mostly True...'},{ID:3,title:'Positive',color:'yellow',fullName:'got a good feeling about it !'},{ID:4,title:'Undefined',color:'pink',fullName:'not specific enough'},{ID:5,title:'M False',color:'orange',fullName:'mostly False'},{ID:6,title:'False',color:'red',fullName:'Complete Bullshit !'}]
-var votingTypes = claimVoteTypes;
+import {connectorsVotingTypesObj, claimsVotesTypesObj,connectorTypes} from '../voteTypes.js';
 
 
 const Connector = (props) =>{
@@ -37,10 +28,10 @@ const Connector = (props) =>{
     }
 
     return(
-        <div id= {props.ID} className= {!claimClicked ? "claim-container" :"claim-container claim-container-pressed"} onClick={(e) => onClaimClick(props.connector.ID)}>
+        <div id= {props.ID}>
 			<div>
-                <div className="connector-headline" style={{color:logConnTypes2[props.connector.type].color}}>
-                {logConnTypes2[props.connector.type].title}
+                <div className="connector-headline" style={{color:connectorTypes[props.connector.type].color}}>
+                {connectorTypes[props.connector.type].title}
                 </div>
                 <div className="connector-content">
                     <div className="connector-claims">
@@ -57,11 +48,11 @@ const Connector = (props) =>{
                         
                     </div>                
                     <div className="target-claim">
-                        <span>{props.connector.claim.content}</span> 
+                        <span>{props.connector.targetClaim.content}</span> 
                     </div>
                 </div>
 			</div>
-            <VotingBar  userID={props.userID} claim={props.connector}  votingTypes={logConnVotingTypes} claimType ='logconn' updateVotes={manageData.updateVotes}/>
+            <ExpVotingBar  userID={props.userID} claim={props.connector} votes={props.connector.votes} votingTypes={connectorsVotingTypesObj} claimType ='claim' updateVotes={manageData.updateVotes} status={props.connector.userVoteStatus} isOnFeed={true}/>
         </div>
     )
 

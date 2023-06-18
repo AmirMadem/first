@@ -153,9 +153,9 @@ const getData = {
 	},
 
 	'getConnectorsClaims':function(){
-		var logicalConnectionsStr =localStorage.getItem("connectorsClaims");
-		var logicalConnectionsObj = JSON.parse(logicalConnectionsStr);
-		return logicalConnectionsObj;
+		var connectorsClaimsStr =localStorage.getItem("connectorsClaims");
+		var connectorsClaimsObj = JSON.parse(connectorsClaimsStr);
+		return connectorsClaimsObj;
 	
 	},
 	setUsersEco:function(usersEco){
@@ -240,7 +240,6 @@ const getData = {
 					for(var ind01=0;ind01<allGroups.length;ind01++){
 					group = allGroups[ind01];
 					if(group.targetClaimID == claimID){
-
 						specClaimLogConnGroup.push(group);
 					}
 				}

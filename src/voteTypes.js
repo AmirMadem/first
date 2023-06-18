@@ -18,5 +18,8 @@ var claimsVotesTypesObj ={
     6:{ID:6,title:'False',name:'False',color:'#dc2f2f',backgroundColor:'#e67a7a',fullName:'Complete Bullshit !'},
 }
 
+const connectorTypes ={0:'Contradict',1:'Weeken',2:'Aprove',3:'Enhance'};
+
 export {connectorsVotingTypesObj};
 export {claimsVotesTypesObj};
+export {connectorTypes};

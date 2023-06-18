@@ -39,12 +39,16 @@ const MainFeed =(props) =>{
 	}
 
 	var claims;
+	var votedClaims;
 	if(props.currentTab == 'profile'){
 		claims = manageData.getClaimsVoted('Statements',props.userID);
 	}
 	else{
 		claims =  manageData.getClaimsVoted("Trending",props.userID);
 	}
+	votedClaims = manageData.getClaimsVoted("Votes",props.userID);
+	console.log("votedClaims");
+	console.log(votedClaims);
 
 	const Feed = (props) =>{
 
@@ -92,17 +96,13 @@ const MainFeed =(props) =>{
 
 		const openClaim = (claimID,claimClicked) =>{	
 
-			claimClicked =(claimID == clickTrail[clickTrail.length-1])
+			claimClicked = (claimID == clickTrail[clickTrail.length-1])
 			var newClaims;
 
 			if(claimClicked == false){
-
 				clickTrail.push(claimID);
-
 				if(claimsIDTemp.length == 0){
-
 					claimsIDTemp.push(claimID);
-
 					for(var ind01=0;ind01<feedClaims.length;ind01++){
 						if(feedClaims[ind01].ID !== claimID){
 							claimsIDTemp.push(feedClaims[ind01].ID)	
@@ -116,8 +116,7 @@ const MainFeed =(props) =>{
 				if(clickTrail.length>1){
 					newClaims = manageData.getClaimsByTargetClaim(clickTrail[clickTrail.length-2],props.userID);
 					clickTrail.pop();
-					setFeedClaims([...newClaims]);
-					
+					setFeedClaims([...newClaims]);	
 				}
 				else{
 					newClaims = manageData.getSpecClaimsVoted(props.userID,claimsIDTemp);
@@ -126,6 +125,40 @@ const MainFeed =(props) =>{
 					setFeedClaims([...newClaims]);
 				}
 			}
+		}
+		
+		var tempConnector = {
+			ID:35,
+			targetClaimID:42,
+			type:0,
+			userVoteStatus:8,
+			votes:{
+				8:1
+			},
+			targetClaim:{
+				ID:42,
+				content:'Target Claim'
+			},
+			connectorClaims:[
+				{
+					ID:74,
+					claimID:89,
+					content:"Connectors Claim 1",
+					groupID:35,
+					targetClaimID:42,
+					type:0,
+					userID:2
+				},
+				{
+					ID:75,
+					claimID:90,
+					content:"Connectors Claim 2",
+					groupID:35,
+					targetClaimID:42,
+					type:0,
+					userID:20
+				}
+			]	
 		}
 
 		return(

@@ -353,21 +353,21 @@ const manageData = {
 		var contentByClaims = manageData.getContentByClaims();
 		var connectionsByGroupID ={};
 		var logicalConnections =getData.getConnectorsClaims();
-		var groupVotes = manageData.getVotesByConnectors();
+		var connectorsVotes = manageData.getVotesByConnectors();
 		var userVotes =getData.getUserVotes(userID,"logconn");
 		var logconn;
 		for(var ind01=0;ind01<logicalConnections.length;ind01++){
 			logconn = logicalConnections[ind01];
 			if(logconn.targetClaimID == claimID){
 				if(!connectionsByGroupID[logconn.groupID]){
-					if(!groupVotes[logconn.groupID]){
-						groupVotes[logconn.groupID] = {}
+					if(!connectorsVotes[logconn.groupID]){
+						connectorsVotes[logconn.groupID] = {}
 					}
 					connectionsByGroupID[logconn.groupID] =
 						{
 							ID:logconn.groupID,
 							type:logconn.type,
-							votes:groupVotes[logconn.groupID],
+							votes:connectorsVotes[logconn.groupID],
 							userVoteStatus:userVotes[logconn.groupID],
 							logConns:[],
 							targetClaimID:logconn.targetClaimID
@@ -393,6 +393,9 @@ const manageData = {
 				logicalConnectionsByType[logType].push(logGroup);
 		}
 		return logicalConnectionsByType;
+	},
+	getClaimsConnectorsVoted:function(claimID,userID){
+
 	},
 	addClaim:function(userID,statementContent){
 		var newClaim = getData.addClaim(userID,statementContent)

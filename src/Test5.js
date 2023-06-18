@@ -331,3 +331,47 @@ for(var connectorID in connectorsObj){
                                     />    
                                 </div>
                             </div>
+
+
+                            <div>
+						<div style={{maxWidth:'400px'}}>
+							<DomLink style={{textDecoration:'none'}} to={linkToTrees} target='_blank'> 🌳 </DomLink>
+							<span>{props.claim.content}</span>
+						</div>
+						<div style={{position:'absolute',right:'0px',top:'20px',width:'280px'}}>
+							<div style={{position:'absolute',width:'80px',right:'0px',top:'0px'}}>
+								<PieChart data={tempData} votes = {props.claim.votes} title ='Left'/>
+							</div>
+							<div style={{position:'absolute',width:'80px',right:'80px',top:'0px'}}>
+								<PieChart data={tempData} votes = {props.claim.votes} title ='Right'/>
+							</div>
+						</div>		
+						<div style={{position:'absolute',bottom:'15px'}}>
+							<ExpVotingBar  userID={props.userID} claim={props.claim} votes={props.claim.votes} votingTypes={claimsVotesTypesObj} claimType ='claim' updateVotes={manageData.updateVotes} status={props.claim.userVoteStatus} isOnFeed={true}/>
+						</div>
+					</div>
+
+                    <div style={{maxWidth:'70%'}}>
+							<DomLink style={{textDecoration:'none'}} to={linkToTrees} target='_blank'> 🌳 </DomLink>
+							<span>{props.claim.content}</span>
+						</div>
+						<div style={{maxWidth:'30%'}}>
+
+
+
+                        <div className="connectors">
+						<div className="contradicting-part">
+							{Object.keys(connectorsByType).map((connectorType)=>
+								connectorType < 2 && connectorsByType[connectorType].map((conGroup,index) =>
+									<InnerConnector key={index} connectorType={connectorType} conGroup={conGroup} votingTypes={connectorsVotingTypesObj} userID={props.userID} status={statuses[conGroup.ID]}   />
+								)
+							)}
+						</div>
+						<div className="Aprove-part">			
+							{Object.keys(connectorsByType).map((connectorType)=>
+								connectorType > 1 && connectorsByType[connectorType].map((conGroup,index) =>
+									<InnerConnector key={index} connectorType={connectorType} conGroup={conGroup} votingTypes={connectorsVotingTypesObj} userID={props.userID} status={statuses[conGroup.ID]} />
+								)
+							)}
+						</div>
+					</div> 
