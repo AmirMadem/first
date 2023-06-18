@@ -26,7 +26,7 @@ const InnerConnector =(props) =>{
 
 	return(
 		<div>
-			<div className="log-conn-type">{connectorTypes[props.connectorType]}</div>
+			<div className="log-conn-type">{connectorTypes[props.connectorType]}</div> 
 			<div className="conn-group">
 				{props.conGroup.logConns.map((logConn,index)=>
 					<div key={index}>
