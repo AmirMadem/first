@@ -26,7 +26,7 @@ const AddClaim = (props)=>{
                     value={newClaim} 
                     onChange={handleChange}
                     className="add-new-claim-text"
-                    placeHolder="Any more ideas ? (:"
+                    placeHolder="New ideas ? (:"
                 /> 
             </div>
             {!newClaim == '' && 
