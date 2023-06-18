@@ -76,8 +76,8 @@ const MainFeed =(props) =>{
 		var newClaimTemp;
 		const addNewClaim =(newClaim) =>{
 			newClaimTemp = manageData.addClaim(props.userID,newClaim);
-			setFeedClaims([...feedClaims,newClaimTemp]);
-			setUnFilteredClaims([...feedClaims,newClaimTemp]);
+			setFeedClaims([newClaimTemp,...feedClaims]);
+			setUnFilteredClaims([newClaimTemp,...feedClaims]);
 		}
 		const onProfileTabChange =(tabTitle)=>{
 			setSearchValue('');
@@ -173,7 +173,7 @@ const MainFeed =(props) =>{
 					<Info/>	
 						:
 					<div>
-						{props.currentTab == 'profile' &&
+						{(props.currentTab == 'profile' && currentFeedTab == 'Statements' || currentFeedTab == 1) &&
 							<AddClaim addNewClaim={addNewClaim}/>
 						}
 						{feedClaims.map((claim) =>
