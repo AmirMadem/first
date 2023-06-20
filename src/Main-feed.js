@@ -3,6 +3,8 @@ import getData from './getData.js';
 import manageData from './manageData.js';
 import ReactDOM from 'react-dom';
 import { FiSearch } from 'react-icons/fi';
+import { Link,useNavigate } from 'react-router-dom'
+
 import SearchinBox from "./components/SearchinBox.js";
 import VotingBar from './components/VotingBar.js'
 import AddingConnector from "./components/AddinConnector.js";
@@ -13,7 +15,6 @@ import Info from "./components/Info.js"
 import Tabs from "./components/Tabs.js"
 import Tree from "./components/tree/Tree.js"
 import Trees from "./components/tree/Trees.js"
-import { Link,useNavigate } from 'react-router-dom'
 
 //import manageUsers from './saveUser.js';
 //import createConnectionfrom "../node_modules/mysql2/promise,js";
@@ -21,15 +22,9 @@ import { Link,useNavigate } from 'react-router-dom'
 
 
 const MainFeed =(props) =>{
-	const navigate = useNavigate();
 
-	const CONTRADICT = 0;
-	const WEEKEN = 1;
-	const APROVE = 2;
-	const SUPPORT =3;
-
-	//console.log(getData.getUsers());
-
+	//when claim is clicked - new feed changes to this claim and all of its connectors claims below
+	//clickTrail holds all clicked claims by order, claimsIDTemp holds all original feed claims ID
 	var claimsIDTemp =[];
 	var clickTrail = [];
 
@@ -39,30 +34,26 @@ const MainFeed =(props) =>{
 	}
 
 	var claims;
-	var votedClaims;
 	if(props.currentTab == 'profile'){
 		claims = manageData.getClaimsVoted('Statements',props.userID);
 	}
 	else{
 		claims =  manageData.getClaimsVoted("Trending",props.userID);
 	}
-	votedClaims = manageData.getClaimsVoted("Votes",props.userID);
-	console.log("votedClaims");
-	console.log(votedClaims);
 
 	const Feed = (props) =>{
 
-
 		const profileTabs = [{title:'Info'},{title:'Statements'},{title:'Votes'}];
 		const feedTabs = [{title:'Popular'},{title:'Trending'},{title:'Fresh'}]	;
-		var tabs;
-		props.currentTab == 'profile' ? tabs = profileTabs : tabs = feedTabs;
-
-		const [currentFeedTab,setCurrentFeedTab] = useState(1);
 		const [feedClaims,setFeedClaims] = useState(props.claims);
 		const [unFilteredClaims,setUnFilteredClaims] = useState(feedClaims);
 		const [searchValue,setSearchValue] = useState('');
+		const [clickedClaimID,setClickedClaimID] = useState();
 		
+		var tabs;
+		props.currentTab == 'profile' ? tabs = profileTabs : tabs = feedTabs;
+		const [currentFeedTab,setCurrentFeedTab] = useState(tabs[1].title);
+
 		const filterBySearch = (event) => {
 			const query = event.target.value;
 			setSearchValue(query);
@@ -85,36 +76,40 @@ const MainFeed =(props) =>{
 			setCurrentFeedTab(tabTitle);	
 			if(tabTitle != 'Info'){
 				setFeedClaims(manageData.getClaimsVoted(tabTitle,props.userID));
+				setClickedClaimID();
 				setUnFilteredClaims(manageData.getClaimsVoted(tabTitle,props.userID));
-
-			}
-			else{
-				
 			}
 
 		}	
-
-		const openClaim = (claimID,claimClicked) =>{	
-
-			claimClicked = (claimID == clickTrail[clickTrail.length-1])
-			var newClaims;
-
-			if(claimClicked == false){
-				clickTrail.push(claimID);
-				if(claimsIDTemp.length == 0){
-					claimsIDTemp.push(claimID);
-					for(var ind01=0;ind01<feedClaims.length;ind01++){
-						if(feedClaims[ind01].ID !== claimID){
-							claimsIDTemp.push(feedClaims[ind01].ID)	
-						}
-					}
+		const fillClaimsIDTemp =(clickedClaim) =>{
+			claimsIDTemp.push(clickedClaim.ID);
+			for(var ind01=0;ind01<feedClaims.length;ind01++){
+				if(feedClaims[ind01].ID !== clickedClaim.ID){
+					claimsIDTemp.push(feedClaims[ind01].ID)	
 				}
-				newClaims = manageData.getClaimsByTargetClaim(claimID,props.userID)
+			}	
+		}
+
+		//when claim is clicked - new feed changes to this claim only and all of its connectors claims below
+		//clickTrail holds all clicked claims by order, claimsIDTemp holds all original feed claims ID
+		const openClaim = (clickedClaim) =>{	
+
+			//isClaimClicked tells if a claim is already clicked or not
+			var isClaimClicked = (clickedClaimID == clickedClaim.ID)
+			var newClaims;
+			if(isClaimClicked == false){
+				clickTrail.push(clickedClaim);
+				if(claimsIDTemp.length == 0){
+					fillClaimsIDTemp(clickedClaim);
+				}
+				newClaims = manageData.getClaimsByTargetClaim(clickedClaim.ID,props.userID);
+				setClickedClaimID(clickedClaim.ID);
 				setFeedClaims([...newClaims]);
 			}
 			else{	
 				if(clickTrail.length>1){
-					newClaims = manageData.getClaimsByTargetClaim(clickTrail[clickTrail.length-2],props.userID);
+					newClaims = manageData.getClaimsByTargetClaim(clickTrail[clickTrail.length-2].ID,props.userID);
+					setClickedClaimID(clickTrail[clickTrail.length-2].ID);
 					clickTrail.pop();
 					setFeedClaims([...newClaims]);	
 				}
@@ -123,6 +118,7 @@ const MainFeed =(props) =>{
 					claimsIDTemp =[]; 
 					clickTrail.pop();
 					setFeedClaims([...newClaims]);
+					setClickedClaimID()
 				}
 			}
 		}
@@ -161,14 +157,32 @@ const MainFeed =(props) =>{
 			]	
 		}
 
+		const clickOnNav = (e,clickedClaim,index)=>{
+			e.preventDefault();
+			if(index < clickTrail.length-1){
+				clickTrail.splice(index);
+				openClaim(clickedClaim);
+			}
+		}
+
 		return(
 			<div>
 				{currentFeedTab != 'Info' &&
-				<div className="feed-search-div">
-					<SearchinBox searchValue={searchValue} filterBySearch={filterBySearch}/>
-				</div>
+					<div className="feed-search-div">
+						<SearchinBox searchValue={searchValue} filterBySearch={filterBySearch}/>
+						{!!clickedClaimID &&
+							<div style={{textAlign:'left',fontSize:'10px'}}>
+								<a href="#" onClick={(e) => clickOnNav(e,'start')}>{currentFeedTab} ->  </a>
+								{clickTrail.map((clickedClaim,index) =>
+									<a href="#" onClick={(e) => clickOnNav(e,clickedClaim,index)}>{clickedClaim.content} ->  </a>
+								)}
+							</div>
+						}
+					</div>
 				}
+				
 				<Tabs  tabs={tabs} chosenTab={1} tabContainer="tab-container" tabClass={"profile-tabs"} onTabChange={onProfileTabChange}/>
+			
 				{currentFeedTab == 'Info' ? 
 					<Info/>	
 						:
@@ -177,13 +191,12 @@ const MainFeed =(props) =>{
 							<AddClaim addNewClaim={addNewClaim}/>
 						}
 						{feedClaims.map((claim) =>
-							<div className = "claim-container" onClick={() =>openClaim(claim.ID)}>
+							<div className = "claim-container" onClick={() =>openClaim(claim)}>
 								<FullClaim 
 									key={claim.ID} 
 									userID={props.userID} 
 									claim ={claim}
-									openClaim = {openClaim}
-									isOpen = {claim.ID == clickTrail[clickTrail.length-1]}
+									isOpen = {claim.ID == clickedClaimID}
 								/>
 							</div>	
 						)} 
@@ -197,24 +210,14 @@ const MainFeed =(props) =>{
 
 		return(
 			<div className="content-container">
-				
-				{(false && props.userID) &&
-				 	<div>
-						<Trees userID ={props.userID} />
-					</div>
-				}
-				{true && 					
-				 	<div>
-						<Link to={linkToTrees} target='_blank'>Trees</Link>					
-				  		<Feed
-				  			claims={claims} 
-				  			userID={props.userID} 
-				  			currentTab ={props.currentTab}
-				  		/>
-					</div>		
-				}
-					
-				  	 			
+				<div>
+					<Link to={linkToTrees} target='_blank'>Trees</Link>					
+				  	<Feed
+				  		claims={claims} 
+				  		userID={props.userID} 
+				  		currentTab ={props.currentTab}
+				  	/>
+				</div>				  	 			
 		    </div>
 	    )
 

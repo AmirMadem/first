@@ -31,8 +31,6 @@ export function PieChart(props) {
 		[claimsVotesTypesObj[5].name, props.votes[5]],
         [claimsVotesTypesObj[6].name, props.votes[6]],
 	  ];
-    console.log("props")
-    console.log(props)
 
   return (
     <Chart

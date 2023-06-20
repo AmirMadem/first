@@ -46,7 +46,6 @@ const ExpVotingBar = (props) =>{
   
 
     const mouseOverVoteButton = () =>{
-        console.log("mouseOverVoteButton")
         setBackgroundColor('#f0f2f5');
     }
 

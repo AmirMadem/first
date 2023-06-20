@@ -52,7 +52,7 @@ const onVoting = (votingData) =>{
 
 			}
 		}
-		setVotes(votes); 	
+		setVotes(votes); 
 	}
 }
 
@@ -64,6 +64,7 @@ const VotingBar = (props) =>{
 	const [chosenVoteType, setChosenVoteType] = useState(props.status);
 	const [hoveredVoteType,setHoveredVoteType] = useState();
 	const [votes,setVotes] = useState(props.claim.votes);
+
 	var votingBarClass;
 
 	if(props.claimType == 'logconn'){
@@ -99,7 +100,6 @@ const VotingBar = (props) =>{
 	}
 
 	const mouseOverVote = (voteType)=>{
-		console.log(voteType)
 		setHoveredVoteType(voteType)
 	}
 	const mouseOutVote = ()=>{
@@ -110,20 +110,24 @@ const VotingBar = (props) =>{
 	var rateWidth = 100/(Object.keys(props.votingTypes).length) + '%';
 
 	return(
-			<div className={votingBarClass} style={{zIndex:'99999',backgroundColor:'white',borderRadius:'18px'}}>
-				{Object.keys(props.votingTypes).map((voteType,index) =>						
-	  				<div key={index} 
-						className={voteType == chosenVoteType ? chosenRateClass : unChosenRateClass} 
-					    style={{width:rateWidth,color:props.votingTypes[voteType].color,backgroundColor: hoveredVoteType == voteType ? props.votingTypes[voteType].backgroundColor : 'white' }} 
-						title={props.votingTypes[voteType].fullName} 
-						onClick={(e) => onRateClick(e,props.votingTypes[voteType])}
-						onMouseOver={()=>mouseOverVote(voteType)} onMouseOut={()=>mouseOutVote(voteType)}
-					>
-							<div>{!!votes[voteType] ? votes[voteType] : '0'}</div>
-							<div>{props.votingTypes[voteType].title} </div>
-					</div>		 
-				)}
-			</div> 		
+		<div>
+
+				<div className={votingBarClass} style={{zIndex:'99999',backgroundColor:'white',borderRadius:'18px'}}>
+					{Object.keys(props.votingTypes).map((voteType,index) =>						
+						<div key={index} 
+							className={voteType == chosenVoteType ? chosenRateClass : unChosenRateClass} 
+							style={{width:rateWidth,color:props.votingTypes[voteType].color,backgroundColor: hoveredVoteType == voteType ? props.votingTypes[voteType].backgroundColor : 'white' }} 
+							title={props.votingTypes[voteType].fullName} 
+							onClick={(e) => onRateClick(e,props.votingTypes[voteType])}
+							onMouseOver={()=>mouseOverVote(voteType)} onMouseOut={()=>mouseOutVote(voteType)}
+						>
+								<div>{!!votes[voteType] ? votes[voteType] : '0'}</div>
+								<div>{props.votingTypes[voteType].title} </div>
+						</div>		 
+					)}
+				</div> 
+				
+		</div>			
 	);
 }
 
