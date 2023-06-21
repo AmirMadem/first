@@ -31,21 +31,25 @@ function FacebookLoginComponent(props) {
   };
 
   return (
-    <div className="container login-big-bunner" style={{padding:'0px'}}>
-      {!login && (
-        <FacebookLogin
-          appId="3278070112454396"
-          autoLoad={false}
-          fields="name,email,picture"
-          scope="public_profile,email,user_friends"
-          callback={responseFacebook}
-          icon="fa-facebook"
-        />
-      )}
+    <div>
+      {true && 
+        <div className="container login-big-bunner" style={{padding:'0px'}}>
+          {!login && (
+            <FacebookLogin
+              appId="3278070112454396"
+              autoLoad={false}
+              fields="name,email,picture"
+              scope="public_profile,email,user_friends"
+              callback={responseFacebook}
+              icon="fa-facebook"
+            />
+          )}
 
-      {login && (
-          <></>
-      )}
+          {login && (
+              <></>
+          )}
+        </div>
+      }
     </div>
   );
 }

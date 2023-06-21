@@ -95,7 +95,9 @@ const Connectors = (props) =>{
         const [isAddCon,setIsAddCon] = useState(false);
         
         const onClaimClick = ()=>{
-            treeClaimClick(props.claimID,gen,props.connectorID,rows)
+            if(!!props.connectorID && !!props.claimID){
+                treeClaimClick(props.claimID,gen,props.connectorID,rows)
+            }
         }
         const onAddConnectorClick = () =>{
             setIsAddCon(true)
@@ -193,7 +195,6 @@ const Connectors = (props) =>{
                         )} 
                     </div>
                 </div>
-                {false && <Wings connectorLocation={connectorsLocations[props.connectorID]} color={color}/>}
             </div>    
         )
     }

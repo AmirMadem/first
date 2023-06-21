@@ -88,7 +88,7 @@ const FullClaim =(props) =>{
 					{!props.isOnTree &&
 						<div style={{width:'100%'}}> 
 							<div className='claim-content-feed' style={{maxWidth:'68%'}}>
-								{!!linkToTrees && <DomLink style={{textDecoration:'none'}} to={linkToTrees} target='_blank'> 🌳 </DomLink>}
+								{(!!linkToTrees && props.claim.userVoteStatus) &&<DomLink style={{textDecoration:'none'}} to={linkToTrees} target='_blank'> 🌳 </DomLink>}
 								<span>{props.claim.content}</span>
 							</div>
 							<div style={{maxWidth:'32%'}}>

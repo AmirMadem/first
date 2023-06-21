@@ -23,6 +23,8 @@ import Trees from "./components/tree/Trees.js"
 
 const MainFeed =(props) =>{
 
+	console.log("MainFeed Rerenders")
+
 	//when claim is clicked - new feed changes to this claim and all of its connectors claims below
 	//clickTrail holds all clicked claims by order, claimsIDTemp holds all original feed claims ID
 	var claimsIDTemp =[];
@@ -50,6 +52,8 @@ const MainFeed =(props) =>{
 		const [searchValue,setSearchValue] = useState('');
 		const [clickedClaimID,setClickedClaimID] = useState();
 		const [isAddConnectorPressed,setIsAddConnectorPressed] = useState()
+		const [leftBarClass,setLeftBarClass] =useState('left-bar');
+		const [rightBarClass,setRightBarClass] =useState('right-bar');
 		
 		var tabs;
 		props.currentTab == 'profile' ? tabs = profileTabs : tabs = feedTabs;
@@ -192,9 +196,6 @@ const MainFeed =(props) =>{
 
 		}
 
-		const [leftBarClass,setLeftBarClass] =useState('left-bar');
-		const [rightBarClass,setRightBarClass] =useState('right-bar');
-
 		return(
 				<div className="main-feed-container">
 					<div className={leftBarClass} onMouseEnter ={()=>onMouseEnterLeftBar()} onMouseLeave ={()=>onMouseLeaveLeftBar()}>
@@ -205,13 +206,12 @@ const MainFeed =(props) =>{
 										<div style={{textAlign:'left',fontSize:'10px'}}>
 											<a href="#" onClick={(e) => clickOnNav(e,currentFeedTab)}>{currentFeedTab} ->  </a>
 											{clickTrail.map((clickedClaim,index) =>
-												<a href="#" onClick={(e) => clickOnNav(e,clickedClaim,index)}>{clickedClaim.content} ->  </a>
+												<a key={index} href="#" onClick={(e) => clickOnNav(e,clickedClaim,index)}>{clickedClaim.content} ->  </a>
 											)}
 										</div>
 									}
 								</div>
 							}
-				
 					</div>
 					<div className="main-feed" >
 						
@@ -225,9 +225,8 @@ const MainFeed =(props) =>{
 									<AddClaim addNewClaim={addNewClaim}/>
 								}
 								{feedClaims.map((claim) =>
-									<div className = "claim-container" onClick={() =>openClaim(claim)}>
+									<div key={claim.ID} className = "claim-container" onClick={() =>openClaim(claim)}>
 										<FullClaim 
-											key={claim.ID} 
 											userID={props.userID} 
 											claim ={claim}
 											isOpen = {claim.ID == clickedClaimID}

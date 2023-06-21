@@ -20,6 +20,9 @@ const AppNavBar = (props) =>{
 					 <img src={Logo} className="logo-pic" onClick={() => props.onLogoClick()}/>
 				</div>
 				<div className="fb-login-baners">
+					<div>
+						Log in
+					</div>	
 					<div className="user-name">
 						{!props.userName && "Hello Guest !"}
 					</div>
@@ -37,10 +40,10 @@ const AppBody =  (props) =>{
 	const [currentTab,setCurrentTab] = useState('feed');
 
 	const profileClickHandler = ()=>{
-			setCurrentTab('profile');
+		setCurrentTab('profile');
 	}
 	const logoClickHandel = () =>{
-					setCurrentTab('feed');
+		setCurrentTab('feed');
 	}
 
 	return(

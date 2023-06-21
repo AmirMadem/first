@@ -45,6 +45,9 @@ const Tree = (props) =>{
     //get the first claim votes and user vote status (the first claim is clicked when the page first load)
     var firstClaimVoted = manageData.getSpceClaimVoted(firstClaimID,userID);
 
+    console.log("firstClaimVoted")
+    console.log(firstClaimVoted)
+
     var claimsLocations = {}; 
     var connectorsLocations = {};
  
