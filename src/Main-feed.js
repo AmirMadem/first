@@ -49,6 +49,7 @@ const MainFeed =(props) =>{
 		const [unFilteredClaims,setUnFilteredClaims] = useState(feedClaims);
 		const [searchValue,setSearchValue] = useState('');
 		const [clickedClaimID,setClickedClaimID] = useState();
+		const [isAddConnectorPressed,setIsAddConnectorPressed] = useState()
 		
 		var tabs;
 		props.currentTab == 'profile' ? tabs = profileTabs : tabs = feedTabs;
@@ -92,7 +93,7 @@ const MainFeed =(props) =>{
 
 		//when claim is clicked - new feed changes to this claim only and all of its connectors claims below
 		//clickTrail holds all clicked claims by order, claimsIDTemp holds all original feed claims ID
-		const openClaim = (clickedClaim) =>{	
+		const openClaim = (clickedClaim,isOnFeed) =>{	
 
 			//isClaimClicked tells if a claim is already clicked or not
 			var isClaimClicked = (clickedClaimID == clickedClaim.ID)
@@ -105,8 +106,14 @@ const MainFeed =(props) =>{
 				newClaims = manageData.getClaimsByTargetClaim(clickedClaim.ID,props.userID);
 				setClickedClaimID(clickedClaim.ID);
 				setFeedClaims([...newClaims]);
+				if(!isOnFeed){
+					setIsAddConnectorPressed(false);
+				}
+				else{
+					setIsAddConnectorPressed(true);
+				}
 			}
-			else{	
+			else if(!isOnFeed){	
 				if(clickTrail.length>1){
 					newClaims = manageData.getClaimsByTargetClaim(clickTrail[clickTrail.length-2].ID,props.userID);
 					setClickedClaimID(clickTrail[clickTrail.length-2].ID);
@@ -118,8 +125,12 @@ const MainFeed =(props) =>{
 					claimsIDTemp =[]; 
 					clickTrail.pop();
 					setFeedClaims([...newClaims]);
-					setClickedClaimID()
+					setClickedClaimID();
+
 				}
+			}
+			else{
+				setIsAddConnectorPressed(true);
 			}
 		}
 		
@@ -159,66 +170,94 @@ const MainFeed =(props) =>{
 
 		const clickOnNav = (e,clickedClaim,index)=>{
 			e.preventDefault();
-			if(index < clickTrail.length-1){
+			if(!index && index != 0){
+				onProfileTabChange(clickedClaim);
+			}
+			else if(index < clickTrail.length-1){
 				clickTrail.splice(index);
 				openClaim(clickedClaim);
 			}
+			
+		}
+		const onMouseEnterLeftBar = ()=>{
+			setLeftBarClass('left-bar hovered')
+		}
+		const onMouseLeaveLeftBar = ()=>{
+			setLeftBarClass('left-bar')
+		}
+		const onMouseEnterRightBar = () =>{
+
+		}
+		const onMouseLeaveRightBar = () =>{
+
 		}
 
+		const [leftBarClass,setLeftBarClass] =useState('left-bar');
+		const [rightBarClass,setRightBarClass] =useState('right-bar');
+
 		return(
-			<div>
-				{currentFeedTab != 'Info' &&
-					<div className="feed-search-div">
-						<SearchinBox searchValue={searchValue} filterBySearch={filterBySearch}/>
-						{!!clickedClaimID &&
-							<div style={{textAlign:'left',fontSize:'10px'}}>
-								<a href="#" onClick={(e) => clickOnNav(e,'start')}>{currentFeedTab} ->  </a>
-								{clickTrail.map((clickedClaim,index) =>
-									<a href="#" onClick={(e) => clickOnNav(e,clickedClaim,index)}>{clickedClaim.content} ->  </a>
-								)}
+				<div className="main-feed-container">
+					<div className={leftBarClass} onMouseEnter ={()=>onMouseEnterLeftBar()} onMouseLeave ={()=>onMouseLeaveLeftBar()}>
+						{currentFeedTab != 'Info' &&
+								<div className="feed-search-div">
+									<SearchinBox searchValue={searchValue} filterBySearch={filterBySearch}/>
+									{!!clickedClaimID &&
+										<div style={{textAlign:'left',fontSize:'10px'}}>
+											<a href="#" onClick={(e) => clickOnNav(e,currentFeedTab)}>{currentFeedTab} ->  </a>
+											{clickTrail.map((clickedClaim,index) =>
+												<a href="#" onClick={(e) => clickOnNav(e,clickedClaim,index)}>{clickedClaim.content} ->  </a>
+											)}
+										</div>
+									}
+								</div>
+							}
+				
+					</div>
+					<div className="main-feed" >
+						
+						<Tabs  tabs={tabs} chosenTab={1} tabContainer="tab-container" tabClass={"profile-tabs"} onTabChange={onProfileTabChange}/>
+
+						{currentFeedTab == 'Info' ? 
+							<Info/>	
+								:
+							<div>
+								{(props.currentTab == 'profile' && (currentFeedTab == 'Statements' || currentFeedTab == 1)) &&
+									<AddClaim addNewClaim={addNewClaim}/>
+								}
+								{feedClaims.map((claim) =>
+									<div className = "claim-container" onClick={() =>openClaim(claim)}>
+										<FullClaim 
+											key={claim.ID} 
+											userID={props.userID} 
+											claim ={claim}
+											isOpen = {claim.ID == clickedClaimID}
+											openClaim = {openClaim}
+											isAddConnectorPressed ={isAddConnectorPressed}
+										/>
+									</div>	
+								)} 
 							</div>
 						}
-					</div>
-				}
+					</div>	
+					<div className={rightBarClass} onMouseEnter ={()=>onMouseEnterRightBar()} onMouseLeave ={()=>onMouseLeaveRightBar()}>
 				
-				<Tabs  tabs={tabs} chosenTab={1} tabContainer="tab-container" tabClass={"profile-tabs"} onTabChange={onProfileTabChange}/>
-			
-				{currentFeedTab == 'Info' ? 
-					<Info/>	
-						:
-					<div>
-						{(props.currentTab == 'profile' && (currentFeedTab == 'Statements' || currentFeedTab == 1)) &&
-							<AddClaim addNewClaim={addNewClaim}/>
-						}
-						{feedClaims.map((claim) =>
-							<div className = "claim-container" onClick={() =>openClaim(claim)}>
-								<FullClaim 
-									key={claim.ID} 
-									userID={props.userID} 
-									claim ={claim}
-									isOpen = {claim.ID == clickedClaimID}
-								/>
-							</div>	
-						)} 
-					</div>
-				}
-			</div>
+					</div>	
+
+				
+				</div>
 		);
 	}
 
 	var linkToTrees = 'trees/' + JSON.stringify(props.userID);
 
 		return(
-			<div className="content-container">
-				<div>
-					<Link to={linkToTrees} target='_blank'>Trees</Link>					
-				  	<Feed
-				  		claims={claims} 
-				  		userID={props.userID} 
-				  		currentTab ={props.currentTab}
-				  	/>
-				</div>				  	 			
-		    </div>
+					<div>
+						<Feed
+							claims={claims} 
+							userID={props.userID} 
+							currentTab ={props.currentTab}
+						/>
+					</div>				  	 			
 	    )
 
 }

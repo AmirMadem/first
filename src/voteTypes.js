@@ -2,8 +2,8 @@
 
 var connectorsVotingTypesObj ={
     
-    7:{ID:7,title:'',name:'False',color:'red',fullName:'False Claims and Wrong logical connection'},
-    8:{ID:8,title:'',name:'FalseCorrect',color:'orange',fullName:'False Claims but Correct logical connection'},
+    7:{ID:7,title:'',name:'False',color:'#dc2f2f',fullName:'False Claims and Wrong logical connection'},
+    8:{ID:8,title:'',name:'FalseCorrect',color:'#f96d00',fullName:'False Claims but Correct logical connection'},
     9:{ID:9,title:'',name:'TrueWrong',color:'blue',fullName:'True Claims but Wrong logical connection'},
     10:{ID:10,title:'',name:'True',color:'green',fullName:'True Claims and Correct logical connection'}
 
@@ -18,7 +18,9 @@ var claimsVotesTypesObj ={
     6:{ID:6,title:'False',name:'False',color:'#dc2f2f',backgroundColor:'#e67a7a',fullName:'Complete Bullshit !'},
 }
 
-const connectorTypes ={0:'Contradict',1:'Weeken',2:'Aprove',3:'Enhance'};
+const connectorTypes ={
+    0:{title:'Contradict',color:'#dc2f2f'},1:{title:'Weeken',color:'#ff347f'},2:{title:'Aprove',color:'green'},3:{title:'Enhance',color:'blue'}
+};
 
 export {connectorsVotingTypesObj};
 export {claimsVotesTypesObj};

@@ -21,7 +21,7 @@ const AddingConnector = (props) =>{
 	const [unFilteredConnectorClaims,setUnFilteredConnectorClaims] = useState(addLogConClaims);
 	const [searchValue,setSearchValue] = useState('');
 	const [newClaim,setNewClaim] = useState('');
-	const [isVisible,setIsVisble] = useState(false);
+	const [isVisible,setIsVisble] = useState(props.isOpen);
 
 	const [connentorType,setConnectorType] = useState();
 	const [pickedColor,setPickedColor] = useState('inherit');
@@ -118,8 +118,6 @@ const AddingConnector = (props) =>{
 			props.scrollToConnector(props.connectorID);
 		}
 		setIsVisble(!isVisible)
-
-
 	}
 	
 
@@ -165,7 +163,7 @@ const AddingConnector = (props) =>{
 				</div>
 			</div>	
 			}
-			{!isVisible && !props.treeID &&
+			{false &&
 				<button className="submit-connector" onClick={(e) => { addConnectorClicked(e)}}>Add Connector</button>
 			}
 			{!isVisible && !!props.treeID &&

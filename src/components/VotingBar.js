@@ -112,7 +112,7 @@ const VotingBar = (props) =>{
 	return(
 		<div>
 
-				<div className={votingBarClass} style={{zIndex:'99999',backgroundColor:'white',borderRadius:'18px'}}>
+				<div className={votingBarClass} style={{backgroundColor:'white',borderRadius:'18px'}}>
 					{Object.keys(props.votingTypes).map((voteType,index) =>						
 						<div key={index} 
 							className={voteType == chosenVoteType ? chosenRateClass : unChosenRateClass} 

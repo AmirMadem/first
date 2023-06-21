@@ -31,7 +31,7 @@ function FacebookLoginComponent(props) {
   };
 
   return (
-    <div className="container login-big-bunner">
+    <div className="container login-big-bunner" style={{padding:'0px'}}>
       {!login && (
         <FacebookLogin
           appId="3278070112454396"

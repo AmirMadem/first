@@ -350,6 +350,7 @@ const manageData = {
 	},
 
 	getClaimsConnectors:function(claimID,userID){
+		var connectorsCount;
 		var contentByClaims = manageData.getContentByClaims();
 		var connectionsByGroupID ={};
 		var logicalConnections =getData.getConnectorsClaims();

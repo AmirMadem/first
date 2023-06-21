@@ -377,3 +377,6 @@ for(var connectorID in connectorsObj){
 					</div> 
 
                     <button onClick={addNewClaim}>Add</button>
+
+                    <Link to={linkToTrees} target='_blank'>Trees</Link>					
+

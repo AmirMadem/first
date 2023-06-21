@@ -92,9 +92,9 @@ const ExpVotingBar = (props) =>{
                 <div className="vote-button2" style={{color:color}}> 
                 </div>
                 :
-                <div style={{color:color,width:'33.333%',textAlign:'center',backgroundColor:backgroundColor}} onMouseOver={()=>mouseOverVoteButton()} onMouseOut={()=>mouseOutVoteButton()} onClick={(event) =>voteClick(event)}>
+                <div style={{color:color,width:'50%',textAlign:'center',backgroundColor:backgroundColor}} onMouseOver={()=>mouseOverVoteButton()} onMouseOut={()=>mouseOutVoteButton()} onClick={(event) =>voteClick(event)}>
                     {!!voteStatusName ?
-                        <span style={{fontWeight:'bold'}}>{voteStatusName}</span> 
+                        <span>{voteStatusName}</span> 
                         :
                         <div><span >⚖️ </span><span>Vote</span></div>
                     }
