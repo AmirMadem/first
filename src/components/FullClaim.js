@@ -39,7 +39,10 @@ const InnerConnector =(props) =>{
 const FullClaim =(props) =>{
 
 	const [connectorsByType,setConnectorsByType] = useState(props.claim.connectors);
-	var linkToTrees = '../trees/' + JSON.stringify(props.userID) +'/'+ props.claim.ID;
+	var linkToTrees;
+	if(!!props.userID){
+		linkToTrees = '../trees/' + JSON.stringify(props.userID) +'/'+ props.claim.ID;
+	}
 
 	var claimDomElementID = "claim" + props.claim.ID;
 	var statuses = {};
@@ -76,13 +79,16 @@ const FullClaim =(props) =>{
 	}
 
 	return(
-		<div id= {claimDomElementID} style={{width:'100%',height:'100%'}}>
+		<div  style={{width:'100%',height:'100%'}}>
+		<div style={{position:'relative'}}>
+			<div id= {claimDomElementID} style={{position:'absolute',top:'-220px'}}></div>
+		</div>
 			{!!props.claim &&
 				<div>
 					{!props.isOnTree &&
 						<div style={{width:'100%'}}> 
 							<div className='claim-content-feed' style={{maxWidth:'68%'}}>
-								<DomLink style={{textDecoration:'none'}} to={linkToTrees} target='_blank'> 🌳 </DomLink>
+								{!!linkToTrees && <DomLink style={{textDecoration:'none'}} to={linkToTrees} target='_blank'> 🌳 </DomLink>}
 								<span>{props.claim.content}</span>
 							</div>
 							<div style={{maxWidth:'32%'}}>

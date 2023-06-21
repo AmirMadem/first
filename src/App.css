@@ -314,6 +314,12 @@
   font-size: 12px;
   text-align: center;
   min-height: 100px;
+  max-height: 250px;
+  overflow: scroll;
+}
+.connectors::-webkit-scrollbar{
+  width: 0px;
+  visibility: hidden;
 }
 .contradicting-part{
   color:crimson;
