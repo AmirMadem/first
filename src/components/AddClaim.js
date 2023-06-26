@@ -30,10 +30,15 @@ const AddClaim = (props)=>{
                 /> 
             </div>
             {!newClaim == '' && 
-                <div className="add-new-claim-submit-container">
-                    <button className="add-new-claim-submit" onClick={addNewClaim} >
-                        Publish new statement
-                    </button>
+                <div>
+                    <div className="is-fact-container">
+                       <input type ="checkbox" className=""/> Fact
+                    </div>   
+                    <div className="add-new-claim-submit-container">
+                        <button className="add-new-claim-submit" onClick={addNewClaim} >
+                            Publish
+                        </button>
+                    </div>
                 </div>
             }
         </div> 

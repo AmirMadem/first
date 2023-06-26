@@ -13,8 +13,6 @@ import Tree from "./tree/Tree.js"
 import Trees from "./tree/Trees.js"
 import ExpVotingBar from './ExpVotingBar.js'
 import {PieChart} from './PieChart.js'
-
-
 import Dom, { Link as DomLink,useNavigate } from 'react-router-dom'
 
 
@@ -47,7 +45,6 @@ const FullClaim =(props) =>{
 	var claimDomElementID = "claim" + props.claim.ID;
 	var statuses = {};
 	var connectorsCount = 0;
-
 
 	for(var ind01=0;ind01<4;ind01++){
 		if(!!props.claim.connectors && !!props.claim.connectors[ind01]){

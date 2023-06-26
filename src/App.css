@@ -2,8 +2,12 @@
 .App {
   text-align: center;
   background-color: #f0f2f5;
-  min-height: fit-content;
-  min-width: fit-content;
+  position: absolute;
+  height: auto;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 
@@ -30,11 +34,11 @@
 }
 
 .facebook-login-div{
-  position: fixed;
+  position: absolute;
   top: 0px;
   right: 0px;
   align-items: center;
-  z-index: 1000;
+  z-index: 10;
 }
 
 .App-link {
@@ -84,21 +88,41 @@
     border-radius: 50%;
     background-color: gray;
     position: absolute;
-    bottom: 5px;
-    right: 20px;
+    top: 5px;
+    right: 30px;
 
 }
+.login-span{
+  position: absolute;
+  top: 50%;
+  margin-top: 4px;
+  right: 24px;
+  
+}
 
+.profile-menu-switch{
+  position: absolute;
+  top:50%;
+  margin-top: 4px;
+  right: 15px;
+}
 
 
 .logo-pic{
     border-radius: 50%;
-    background-color: gray;
     position: relative;
     top:13px;
     right: 5px;
     width: 50px;
     height: 50px;
+  }
+
+  .logout-pic{
+    position: relative;
+    right: 5px;
+    width: 22px;
+    height: 22px;
+    margin-right: 5px;
   }
 
 .user-name{
@@ -451,8 +475,15 @@
 
 .add-new-claim-submit-container{
   text-align: center;
-  width: 100%;
+  width: 50%;
   margin-top: 15px;
+  display: inline-block;
+}
+.is-fact-container{
+  text-align: center;
+  width: 50%;
+  margin-top: 15px;
+  display: inline-block;
 }
 
 .add-new-claim-submit:disabled{
@@ -751,3 +782,58 @@ font-size: 7px;
 
 
 
+.login-window-container{
+
+  width: 400px;
+  height: 500px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -250px;
+  margin-left: -200px;
+  background-color: #ffff;
+  border: groove;
+  border-color:gainsboro;
+  border-width: 2px;
+  border-radius: 8px;
+}
+
+.small-login-fb {
+    width: 225px!important;
+    height: 50px!important;
+    font-size: 12px!important;
+}
+
+.facebook-login-button-container{
+  position: absolute;
+  bottom:-110px;
+  left: 50%;
+  margin-left: -130px;
+}
+
+.profile-menu{
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  width: 150px;
+  height: 250px;
+  background-color: white;
+  border: groove;
+  border-color: gainsboro;
+  border-width: 1px;
+  border-radius: 8px;
+}
+
+.log-out-span{
+  position: absolute;
+  bottom: 15px;
+  margin-left: 25px;
+
+}
+
+.general-container{
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}

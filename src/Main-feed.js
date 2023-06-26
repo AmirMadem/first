@@ -25,6 +25,8 @@ const MainFeed =(props) =>{
 
 	console.log("MainFeed Rerenders")
 
+	
+
 	//when claim is clicked - new feed changes to this claim and all of its connectors claims below
 	//clickTrail holds all clicked claims by order, claimsIDTemp holds all original feed claims ID
 	var claimsIDTemp =[];
