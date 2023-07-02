@@ -17,8 +17,19 @@ function FacebookLoginComponent(props) {
     responseArr.push(response);
     props.setUserPicture(response.picture.data.url);
     props.setUserName(response.name);
+    props.setUserEmail(response.email)
     const userID ="" +response.id;
     props.setUserID(userID);
+    
+    var user = {
+      ID:userID,
+      email:response.email,
+      name:response.name,
+      picture:response.picture.data.url
+    }
+
+    props.onLogin(user);
+
     if (response.accessToken) {
       setLogin(true);
     } else {

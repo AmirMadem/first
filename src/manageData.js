@@ -1,4 +1,6 @@
 import getData from './getData.js';
+import usersData from './getData/users.js'
+
 
 
 const manageData = {
@@ -44,6 +46,38 @@ const manageData = {
 		}
 
 		return votesByClaims;
+	},
+	userFBLogin:function(user,loginCallBack){
+		var userDB = usersData.getUserByEmail(user.email)
+		var savedUser;
+		userDB.then(
+			function(result)
+			{
+				if(!!result.result && !!result.result[0]){
+					console.log("user was found:")
+					console.log(result.result[0])
+					loginCallBack(result.result[0]);
+				}
+				else{
+					console.log("no user")
+					savedUser = usersData.createNewUser(user)
+					savedUser.then(
+						function(result){
+							console.log("create user result")
+							console.log(result)
+							console.log("create user result")
+							loginCallBack(result.result);
+						},
+						function(err){
+
+						}
+					)
+				}
+			},
+			function(err){
+				console.log("sheeeeeet")
+			}
+		)
 	},
 	getSpecTreeClaimsAndConnectors:function(firstClaimID,claimID,claims,connectors,specTreeClaims,specTreeConnectors){
 			var currConnector;

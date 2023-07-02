@@ -837,3 +837,11 @@ font-size: 7px;
   margin: 0px;
   padding: 0px;
 }
+
+.loading-profile-gif{
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: -8px;
+  right:0px;
+}

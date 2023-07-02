@@ -32,7 +32,12 @@ const AddClaim = (props)=>{
             {!newClaim == '' && 
                 <div>
                     <div className="is-fact-container">
-                       <input type ="checkbox" className=""/> Fact
+                    <select name="cars" id="cars">
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="audi">Audi</option>
+                    </select>
                     </div>   
                     <div className="add-new-claim-submit-container">
                         <button className="add-new-claim-submit" onClick={addNewClaim} >

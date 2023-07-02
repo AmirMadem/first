@@ -380,3 +380,19 @@ for(var connectorID in connectorsObj){
 
                     <Link to={linkToTrees} target='_blank'>Trees</Link>					
 
+                    app.post('/creacteUser', async (data, res) => {
+	var query= `INSERT INTO users 
+	 VALUES (`
+		data.fbID`,`
+		data.email`,`
+		data.name`,`
+		data.pictureUrl`,`
+		data.affiliation`,`
+		data.economics_affiliation`,`
+		data.general_affiliation
+	 `)`
+    const result = await executeQuery(query);
+	const data =result[0];
+	console.log("sending result: "+JSON.stringify(data));
+    res.send({result: data});
+});

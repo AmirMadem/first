@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import MainFeed from './Main-feed.js';
 import Logo from './logo.jpg';
 import LogOut from './images/logOut.png'
+import LoadingProfilePic from './images/loading-profile-pic.gif'
 import "./App.css";
 import FacebookLoginComponent from './facebooklogin.component.js';
 import LoginWindow from './components/LoginWindow.js'
 import { Outlet, Link } from "react-router-dom";
+import manageData from './manageData.js'
+
 
 
 
@@ -35,6 +38,9 @@ const ProfileMenu = (props) =>{
 }
 
 const AppNavBar = (props) =>{
+
+	var userID = (!!props.user && !!props.user.ID) ? props.user.ID : null;
+	
 	const onMenuSwitchClick =(e)=>{
 		e.stopPropagation();
 		props.setIsMenuOpen(!props.isMenuOpen);
@@ -46,15 +52,16 @@ const AppNavBar = (props) =>{
 				</div>
 				<div className="facebook-login-div">
 					<div className="login-span">
-						{!props.userName && <span onClick={()=>{props.setIsPopUpShown(true)}}>Login</span>}
+						{(!props.isLoadingProfile && !userID) &&<span onClick={()=>{props.setIsPopUpShown(true)}}>Login</span>}
+						{!!props.isLoadingProfile && <img src={LoadingProfilePic} className="loading-profile-gif"/>}
 					</div>	
 					<div className="profile-bunner">
-					{props.picture &&
+					{!!userID &&
 						<div>
 							<div className="profile-menu-switch">
 								<div style={{transform:'rotate(180deg)'}} onClick={(e)=>onMenuSwitchClick(e)}> ^ </div>
 							</div>
-						 	<img className="rounded-pic" src={props.picture} alt="" onClick={(e) => props.onProfileClick(e)}/>
+						 	<img className="rounded-pic" src={props.user.pictureUrl} alt="" onClick={(e) => props.onProfileClick(e)}/>
 						</div>
 					}
 					</div>
@@ -69,12 +76,17 @@ const AppBody =  (props) =>{
 	const [userPicture,setUserPicture] = useState("");
 	const [userName,setUserName] = useState("");
 	const [userID,setUserID] = useState("");
-
-
+	const [userEmail,setUserEmail] = useState("");
+	var userTemp = {
+		ID:'',
+		email:'',
+		name:'',
+		pictureUrl:''	
+	}
+	const [user,setUser] = useState(userTemp);
 	const [isPopUpShown,setIsPopUpShown]= useState();
 	const [isMenuOpen,setIsMenuOpen]= useState(false);
-
-
+	const [isLoadingProfile,setIsLoadingProfile] = useState(false);
 
 	console.log("AppBody-Renders");
 	const [currentTab,setCurrentTab] = useState('feed');
@@ -92,26 +104,38 @@ const AppBody =  (props) =>{
 		setUserID();
 		setUserName();
 		setUserPicture();
+		setUserEmail();
+		setUser();
 	}
 
 	const appBodyClick = (e)=>{
 		e.stopPropagation();
 		setIsMenuOpen(false)
 	}
+	
+
+	useEffect(() => {
+		if(!!userEmail){
+			var user ={
+
+			}
+			//manageData.userFBLogin({})
+		}
+	  },[userEmail]);
 
 	return(
-			<div class="general-container" onClick={(e)=>appBodyClick(e)}>
+			<div className="general-container" onClick={(e)=>appBodyClick(e)}>
 				{(!isPopUpShown || !!userID) &&
 					<div>
-						<AppNavBar  isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} logOut={logOut} setIsPopUpShown={setIsPopUpShown} setUserName={setUserName} setUserID={setUserID} setUserPicture={setUserPicture} userName={userName} picture={userPicture} onProfileClick={profileClickHandler} onLogoClick={logoClickHandel}/>
+						<AppNavBar  isLoadingProfile={isLoadingProfile} user={user} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} logOut={logOut} setIsPopUpShown={setIsPopUpShown} onProfileClick={profileClickHandler} onLogoClick={logoClickHandel}/>
 						<div className="main-feed-warpper">
-							<MainFeed userID ={userID} userName={userName} currentTab={currentTab} />
+							<MainFeed user={user} currentTab={currentTab} />
 						</div>
 					</div>	
 				}
 				{(!!isPopUpShown && !userID) &&
 						<div class="general-container" onClick={()=>setIsPopUpShown(false)}>
-							<LoginWindow setUserName={setUserName} setUserID={setUserID} setUserPicture={setUserPicture}/>
+							<LoginWindow setIsLoadingProfile={setIsLoadingProfile} setUser={setUser} setUserName={setUserName} setUserID={setUserID} setUserPicture={setUserPicture} setUserEmail={setUserEmail}/>
 						</div>	
 				}
 				

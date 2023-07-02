@@ -1,9 +1,12 @@
 import React, { useState, useEffect,useRef} from "react";
-import getData from './getData.js';
-import manageData from './manageData.js';
 import ReactDOM from 'react-dom';
 import { FiSearch } from 'react-icons/fi';
 import { Link,useNavigate } from 'react-router-dom'
+
+import getData from './getData.js';
+import manageData from './manageData.js';
+import usersData from './getData/users.js'
+
 
 import SearchinBox from "./components/SearchinBox.js";
 import VotingBar from './components/VotingBar.js'
@@ -16,6 +19,7 @@ import Tabs from "./components/Tabs.js"
 import Tree from "./components/tree/Tree.js"
 import Trees from "./components/tree/Trees.js"
 
+
 //import manageUsers from './saveUser.js';
 //import createConnectionfrom "../node_modules/mysql2/promise,js";
 
@@ -24,9 +28,14 @@ import Trees from "./components/tree/Trees.js"
 const MainFeed =(props) =>{
 
 	console.log("MainFeed Rerenders")
+	console.log("props.user")
+	console.log(props.user)
+	console.log("props.user")
 
-	
-
+	var userID;
+	if(!!props.user){
+		userID = props.user.ID;
+	}
 	//when claim is clicked - new feed changes to this claim and all of its connectors claims below
 	//clickTrail holds all clicked claims by order, claimsIDTemp holds all original feed claims ID
 	var claimsIDTemp =[];
@@ -39,10 +48,10 @@ const MainFeed =(props) =>{
 
 	var claims;
 	if(props.currentTab == 'profile'){
-		claims = manageData.getClaimsVoted('Statements',props.userID);
+		claims = manageData.getClaimsVoted('Statements',userID);
 	}
 	else{
-		claims =  manageData.getClaimsVoted("Trending",props.userID);
+		claims =  manageData.getClaimsVoted("Trending",userID);
 	}
 
 	const Feed = (props) =>{
@@ -139,40 +148,6 @@ const MainFeed =(props) =>{
 				setIsAddConnectorPressed(true);
 			}
 		}
-		
-		var tempConnector = {
-			ID:35,
-			targetClaimID:42,
-			type:0,
-			userVoteStatus:8,
-			votes:{
-				8:1
-			},
-			targetClaim:{
-				ID:42,
-				content:'Target Claim'
-			},
-			connectorClaims:[
-				{
-					ID:74,
-					claimID:89,
-					content:"Connectors Claim 1",
-					groupID:35,
-					targetClaimID:42,
-					type:0,
-					userID:2
-				},
-				{
-					ID:75,
-					claimID:90,
-					content:"Connectors Claim 2",
-					groupID:35,
-					targetClaimID:42,
-					type:0,
-					userID:20
-				}
-			]	
-		}
 
 		const clickOnNav = (e,clickedClaim,index)=>{
 			e.preventDefault();
@@ -255,7 +230,7 @@ const MainFeed =(props) =>{
 					<div>
 						<Feed
 							claims={claims} 
-							userID={props.userID} 
+							userID={userID} 
 							currentTab ={props.currentTab}
 						/>
 					</div>				  	 			

@@ -1,4 +1,5 @@
 
+import {postData} from './getData/db-commands.js' 
 
 const CONTRADICT = 0;
 const WEEKEN = 1;
@@ -9,24 +10,6 @@ const UNENGAGED = 0;
 const AGREEMENT =1;
 const DISAGREEMENT =2;
 
-
-async function postData(url = "", data = {}) {
-	// Default options are marked with *
-	const response = await fetch(url, {
-	  method: "POST", // *GET, POST, PUT, DELETE, etc.
-	  mode: "cors", // no-cors, *cors, same-origin
-	  cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-	  credentials: "same-origin", // include, *same-origin, omit
-	  headers: {
-		"Content-Type": "application/json",
-		// 'Content-Type': 'application/x-www-form-urlencoded',
-	  },
-	  redirect: "follow", // manual, *follow, error
-	  referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-	  body: JSON.stringify(data), // body data type must match "Content-Type" header
-	});
-	return response.json(); // parses JSON response into native JavaScript objects
-  }
 
 var claims = [{ID:1,userID:10158776425001046,engagment:0,content:"Minimum wage doesn't help the poor"},{ID:2,userID:10158776425001046,engagment:0,content:"Taxation makes people poorer"},{ID:3,userID:3,engagment:0,content:"Without minimum wage, workers would be exploited"}];
 var votesOnClaims = [{ID:1}];
@@ -152,7 +135,7 @@ const getData = {
 
 	},
 
-	'getConnectorsClaims':function(){
+	getConnectorsClaims:function(){
 		var connectorsClaimsStr =localStorage.getItem("connectorsClaims");
 		var connectorsClaimsObj = JSON.parse(connectorsClaimsStr);
 		return connectorsClaimsObj;
@@ -161,26 +144,17 @@ const getData = {
 	setUsersEco:function(usersEco){
 	},
 
-	getUsers: async function() {
-		console.log("here");
-
-
-		const queryResult = await postData("/getUsers", {query: "select * from votetypes"});
-		/*const queryResult = await postData("/getUsers", 
-		{query: 
-			"INSERT INTO votetypes "+
-			"VALUES (1, 'False', 'red'); "
-		});*/
-
-	/*	const queryResult = await postData("/getUsers", {query: "CREATE TABLE votetypes ("+
-			"ID int,"+
-			"name varchar(255),"+
-			"color varchar(255)"+
-		   
-		");"
-	}); */
-
-		console.log(queryResult);
+	getUsers: async function(fbID) {
+		const queryResult = await postData("/getUsers");
+		return queryResult;
+	},
+	getUserByFbID: async function(fbID) {
+		const queryResult = await postData("/getUserByFbID",{fbID:fbID});
+		console.log(JSON.stringify(queryResult));
+	},
+	createUser: async function(user) {
+		const queryResult = await postData("/createUser",user);
+		console.log(JSON.stringify(queryResult));
 	},
 	getUserVotes:function(userID,type){
 
